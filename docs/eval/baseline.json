@@ -1,0 +1,120 @@
+[
+  {
+    "run": 1,
+    "right_part_numbers": 3,
+    "out_of": 7,
+    "hits": {
+      "masonry brick": true,
+      "window": false,
+      "glass": false,
+      "door frame": false,
+      "cheese slope": true,
+      "lamp post": false,
+      "bracket": true
+    },
+    "part_numbers_given": [
+      "50746",
+      "60623",
+      "98283",
+      "99781"
+    ],
+    "not_in_catalog": [],
+    "answer": "98283 - Brick, Modified 1 x 2 with Masonry Profile - Sand Green  \n60596c01 - Window 1 x 2 x 3 Flat Front with Glass - White (clear glass)  \n60623 - Door Frame 1 x 4 x 6 - White  \n50746 - Slope 30 1 x 1 (Cheese Slope) - Red  \n110 - Streetlamp - Black  \n99781 - Bracket 1 x 2 - 1 x 2 - White"
+  },
+  {
+    "run": 2,
+    "right_part_numbers": 5,
+    "out_of": 7,
+    "hits": {
+      "masonry brick": true,
+      "window": false,
+      "glass": false,
+      "door frame": true,
+      "cheese slope": true,
+      "lamp post": true,
+      "bracket": true
+    },
+    "part_numbers_given": [
+      "11062",
+      "50746",
+      "60592",
+      "60596",
+      "60601",
+      "98283",
+      "99780"
+    ],
+    "not_in_catalog": [],
+    "answer": "98283 - Brick, Modified 1 x 2 with Masonry Profile - Sand Green  \n60592 - Window 1 x 2 x 3 Flat Front - White  \n60601 - Glass for Window 1 x 2 x 3 Flat Front - Transparent  \n60596 - Door Frame 1 x 4 x 6 - White  \n50746 - Slope 30 1 x 1 x 2/3 (Cheese Slope) - Red  \n11062 - Lamp Post 1 x 1 x 6 - Black  \n99780 - Bracket 1 x 2 - 1 x 2 - White"
+  },
+  {
+    "run": 3,
+    "right_part_numbers": 3,
+    "out_of": 7,
+    "hits": {
+      "masonry brick": true,
+      "window": false,
+      "glass": false,
+      "door frame": true,
+      "cheese slope": true,
+      "lamp post": false,
+      "bracket": false
+    },
+    "part_numbers_given": [
+      "54200",
+      "60596",
+      "60599",
+      "60601",
+      "98283",
+      "99207"
+    ],
+    "not_in_catalog": [],
+    "answer": "98283 - Brick, Modified 1 x 2 with Masonry Profile - Sand Green  \n60596 - Window 1 x 2 x 3 Frame - White  \n60601 - Glass for Window 1 x 2 x 3 - Transparent  \n60599 - Door Frame 1 x 4 x 6 - White  \n54200 - Slope 30 1 x 1 x 2/3 (Cheese Slope) - Red  \n110 - Lamp Post - Black  \n99207 - Bracket 1 x 2 - 1 x 2 - White"
+  },
+  {
+    "run": 4,
+    "right_part_numbers": 4,
+    "out_of": 7,
+    "hits": {
+      "masonry brick": true,
+      "window": false,
+      "glass": false,
+      "door frame": true,
+      "cheese slope": true,
+      "lamp post": false,
+      "bracket": true
+    },
+    "part_numbers_given": [
+      "54200",
+      "60596",
+      "98283",
+      "99781"
+    ],
+    "not_in_catalog": [],
+    "answer": "98283 - Brick 1 x 2 with Masonry Profile - Sand Green  \n60593c01 - Window 1 x 2 x 3 with Glass - White / Transparent  \n60596 - Door Frame 1 x 4 x 6 - White  \n54200 - Slope 30 1 x 1 x 2/3 - Red  \n110 - Lamp Post 2 x 2 x 8 - Black  \n99781 - Bracket 1 x 2 - 1 x 2 - White"
+  },
+  {
+    "run": 5,
+    "right_part_numbers": 3,
+    "out_of": 7,
+    "hits": {
+      "masonry brick": true,
+      "window": false,
+      "glass": false,
+      "door frame": false,
+      "cheese slope": true,
+      "lamp post": true,
+      "bracket": false
+    },
+    "part_numbers_given": [
+      "11062",
+      "54200",
+      "57895",
+      "60592",
+      "60601",
+      "98283",
+      "99206"
+    ],
+    "not_in_catalog": [],
+    "answer": "98283 - Brick, Modified 1 x 2 with Masonry Profile - Sand Green  \n60592 - Window 1 x 2 x 3 Flat Front - White  \n60601 - Window Glass for 1 x 2 x 3 Flat Front - Transparent  \n57895 - Door Frame 1 x 4 x 6 - White  \n54200 - Slope 30 1 x 1 x 2/3 (Cheese) - Red  \n11062 - Street Lamp 2 x 2 x 7 - Black  \n99206 - Bracket 1 x 2 - 1 x 2 - White"
+  }
+]

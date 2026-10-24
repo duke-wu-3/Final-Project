@@ -145,6 +145,7 @@ function renderMeters(s) {
         <tr><td>&nbsp;&nbsp;of which cached</td><td>${num(u.cached)} (${u.input ? Math.round((100 * u.cached) / u.input) : 0}%)</td></tr>
         <tr><td>Output tokens</td><td>${num(u.output)}</td></tr>
         <tr><td>Model calls</td><td>${u.calls}</td></tr>
+        ${u.cache_hits ? `<tr><td>Served free from cache</td><td>${u.cache_hits} of ${u.calls}</td></tr>` : ""}
       </table>
       <p class="muted small">${esc(agents)}</p>`;
   }

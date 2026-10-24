@@ -96,8 +96,18 @@ def search_parts(query: str, limit: int = 8) -> list[dict]:
     """.format(printed="" if want_print else "AND p.printed = 0")
     quoted = ['"%s"' % t.replace('"', "") for t in toks]
     rows = _db().execute(sql, (" ".join(quoted), limit)).fetchall()
-    if len(rows) < 3:  # loosen to "any word" when the exact phrase finds little
-        seen = {r["part_num"] for r in rows}
+    seen = {r["part_num"] for r in rows}
+    if len(rows) < 3:
+        # First drop one descriptive word at a time ("window frame 1 x 2 x 3" -> "window 1 x 2 x 3"),
+        # keeping sizes, since sizes are what builders get right and names are what they get wrong.
+        for i, t in enumerate(toks):
+            if t.isdigit() or t == "x" or "/" in t or len(toks) < 3:
+                continue
+            for r in _db().execute(sql, (" ".join(quoted[:i] + quoted[i + 1 :]), 4)).fetchall():
+                if r["part_num"] not in seen and len(rows) < limit:
+                    rows.append(r)
+                    seen.add(r["part_num"])
+    if len(rows) < 3:  # last resort: any word
         more = _db().execute(sql, (" OR ".join(quoted), limit * 2)).fetchall()
         rows += [r for r in more if r["part_num"] not in seen][: limit - len(rows)]
     out = []

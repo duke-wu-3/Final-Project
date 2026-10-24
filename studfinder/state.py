@@ -170,8 +170,8 @@ class Session:
         )
 
     # --- usage -----------------------------------------------------------------
-    def record_usage(self, agent: str, u: dict) -> None:
-        u = {**u, "cost": cost_usd(u)}
+    def record_usage(self, agent: str, u: dict, cache_hit: bool = False) -> None:
+        u = {**u, "cost": 0.0 if cache_hit else cost_usd(u), "cache_hits": int(cache_hit)}
         for bucket in (self.run_usage, self.session_usage):
             for k, v in u.items():
                 bucket[k] = bucket.get(k, 0) + v

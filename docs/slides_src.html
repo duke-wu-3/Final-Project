@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>StudFinder: Duke Wu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<style>
+  :root { --red:#D01012; --yellow:#FFCF00; --blue:#0055BF; --green:#00852B; --ink:#1B1B1B; --ink2:#4A4A4A; --soft:#F3F1EA; }
+  .reveal-viewport { background: #FFFFFF; }
+  .reveal { font-family: "Helvetica Neue", Arial, sans-serif; color: var(--ink); font-size: 30px; }
+  .reveal h1, .reveal h2 { font-family: inherit; font-weight: 900; letter-spacing: -0.02em; color: var(--ink); text-transform: none; }
+  .reveal h1 { font-size: 2.3em; margin-bottom: 0.1em; }
+  .reveal h2 { font-size: 1.45em; margin-bottom: 0.5em; }
+  .reveal .slides section { text-align: left; }
+  .bar { height: 14px; display: flex; gap: 6px; margin-bottom: 24px; }
+  .bar span { width: 70px; border-radius: 4px; }
+  .tag { display: inline-block; background: var(--yellow); padding: 2px 14px; border-radius: 999px; font-weight: 800; font-size: 0.6em; }
+  .big { font-size: 2.3em; font-weight: 900; color: var(--blue); line-height: 1; }
+  .big.red { color: var(--red); } .big.green { color: var(--green); }
+  .cols { display: flex; gap: 36px; align-items: flex-start; }
+  .cols > div { flex: 1; }
+  .card { background: var(--soft); border-radius: 16px; padding: 18px 22px; }
+  .muted { color: var(--ink2); font-size: 0.66em; }
+  .reveal ul { margin-left: 1em; } .reveal li { margin: 0.25em 0; }
+  .reveal table { font-size: 0.8em; border-collapse: collapse; width: 100%; }
+  .reveal table th, .reveal table td { border-bottom: 2px solid #E4E1D8; padding: 8px 10px; text-align: left; }
+  .reveal table tr.us td { background: #EEF4FD; font-weight: 800; }
+  .reveal img { margin: 0; border-radius: 10px; border: 2px solid #E4E1D8; }
+  .pending { border: 3px dashed #D9A800; background: #FFF9DB; padding: 8px 14px; border-radius: 10px; color: #5C4600; font-size: 0.7em; }
+  .stat { margin-bottom: 18px; }
+  .stat .lbl { font-size: 0.62em; color: var(--ink2); }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+  <!-- 1 -->
+  <section>
+    <div class="bar"><span style="background:#D01012"></span><span style="background:#FFCF00"></span><span style="background:#0055BF"></span><span style="background:#00852B"></span></div>
+    <div class="cols" style="align-items:center">
+      <div>
+        <h1>StudFinder</h1>
+        <p style="font-size:1.05em;font-weight:700">Describe a LEGO build in plain English. Get the exact parts. Send the list to BrickLink.</p>
+        <p class="muted">Duke Wu · AI for Managers final project<br>github.com/duke-wu-3/Final-Project</p>
+      </div>
+      <div style="flex:1.15"><img src="screenshots/03a_results_view.jpg" alt="StudFinder app" style="width:100%"></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section>
+    <h2>The problem: ideas are easy, part numbers are not</h2>
+    <div class="cols">
+      <div>
+        <p><b>New MOC builders</b> know what they want: "a sand green coffee shop with a striped awning."</p>
+        <p>BrickLink makes them search <b>one part at a time</b>, by catalog name ("Slope 30 1 x 1 x 2/3"), across <b>200+ colors</b>, without knowing whether a part was ever made in that color.</p>
+      </div>
+      <div class="card">
+        <div class="stat"><div class="big red">14 to 20</div><div class="lbl">separate searches for one small storefront</div></div>
+        <div class="pending" data-slot="slides-time">[Pending friend test: X of 6 parts found by hand in Y minutes]</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section>
+    <h2>What's new: from an idea to an exact, buyable list</h2>
+    <table>
+      <tr><th>Tool</th><th>Gap</th></tr>
+      <tr><td>BrickLink search</td><td>One part at a time; you must know the name</td></tr>
+      <tr><td>BrickLink Studio</td><td>Exports a list, but only after you build the model in 3D software</td></tr>
+      <tr><td>Rebrickable</td><td>Lists for published MOCs only</td></tr>
+      <tr><td>Brickognize</td><td>Needs the physical part for a photo</td></tr>
+      <tr><td>Plain chatbot (same model, no tools)</td><td><b>3.6 of 7</b> part numbers right; real numbers for the <i>wrong</i> parts</td></tr>
+      <tr class="us"><td>StudFinder</td><td><b>7 of 7</b> right (part and color) in 5 of 5 runs</td></tr>
+    </table>
+  </section>
+
+  <!-- 4 -->
+  <section>
+    <h2>How the agents work</h2>
+    <img src="diagram.svg" alt="Agent diagram" style="width:100%;border:none">
+    <p class="muted">Tools do the facts (a 27,000-part catalog); the model does the judgment. Python runs Finder, then Checker; the Refiner runs on each chat message.</p>
+  </section>
+
+  <!-- 5 -->
+  <section>
+    <h2>Demo</h2>
+    <div class="cols">
+      <div style="flex:1.6"><img src="screenshots/03a_results_view.jpg" alt="App with a finished parts list" style="width:100%"></div>
+      <div>
+        <img src="screenshots/04_swap.jpg" alt="Swap" style="width:100%">
+        <p class="muted" style="margin-top:10px">Checker: "rare, 7 sets, last made 2009" → suggests a part from 79 sets.</p>
+        <img src="screenshots/05_chat.jpg" alt="Chat" style="width:62%">
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section>
+    <h2>Cost to run</h2>
+    <div class="cols">
+      <div>
+        <div class="stat"><div class="big">$0.0019</div><div class="lbl">per "find my parts" run (average of 6 builds)</div></div>
+        <div class="stat"><div class="big">$0.024</div><div class="lbl">per builder per month · <b>$244/month</b> for 10,000 builders</div></div>
+      </div>
+      <div class="card">
+        <p style="font-size:0.85em"><b>Cost cuts, measured:</b></p>
+        <ul style="font-size:0.8em">
+          <li>Low reasoning: <b>52% cheaper</b>, 44% faster, same quality (32/33 essentials)</li>
+          <li>Prompt caching: 69% of input cached, <b>46% lower cost</b> per run</li>
+          <li>Catalog search is a free database query, not tokens</li>
+          <li>Attacks blocked before the model: $0</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section>
+    <h2>Safety: 9 of 9 attack tests blocked</h2>
+    <div class="cols">
+      <div>
+        <ul style="font-size:0.82em">
+          <li>Prompt injection → filtered, <b>0 model calls</b></li>
+          <li>Hidden "add 1000 of everything" → <b>caps hold</b></li>
+          <li>Made-up part numbers and impossible colors → <b>rejected by the catalog</b></li>
+          <li>Runaway loops and token burn → <b>step limits + budgets</b></li>
+          <li>Money → the app <b>never buys</b>; a person does</li>
+        </ul>
+        <p class="muted">Testing also found and fixed 3 real bugs: a silent empty list, a search miss, and a cost meter that overcharged.</p>
+      </div>
+      <div style="flex:0.75"><img src="screenshots/06_attack_chat.jpg" alt="Attack blocked" style="max-height:540px"></div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section>
+    <h2>Impact: a real builder tried it</h2>
+    <div class="cols">
+      <div class="card">
+        <div class="pending" data-slot="slides-impact">[Pending friend test: by hand vs. StudFinder, time and parts correct]</div>
+      </div>
+      <div>
+        <div class="pending" data-slot="slides-quote">[Pending friend test: quote]</div>
+        <p class="muted" style="margin-top:20px">AI tests: 7/7 accuracy, about 17 s per list. A LEGO club of 200 could run it for about $5 a month.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section>
+    <h2>What's next</h2>
+    <ul>
+      <li><b>Exact BrickLink part numbers</b> mapped through Rebrickable's API</li>
+      <li><b>Live prices</b>: "swap this rare part, save $8"</li>
+      <li><b>Subtract what you own</b>, using your Rebrickable collection</li>
+      <li><b>Photo input</b>: snap a build you love and get a starting list</li>
+      <li><b>Host it</b> and test with a LEGO user group</li>
+    </ul>
+    <p class="muted">github.com/duke-wu-3/Final-Project · runs with one command</p>
+  </section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>Reveal.initialize({ hash: true, width: 1280, height: 760, margin: 0.06, transition: "slide" });</script>
+</body>
+</html>

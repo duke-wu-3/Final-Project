@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="Nunito, system-ui, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#4A4A4A"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="900" height="400" fill="#FFFFFF"/>
+  <!-- builder -->
+  <rect x="15" y="140" width="135" height="90" rx="12" fill="#F3F1EA" stroke="#BDB8A8" stroke-width="2"/>
+  <text x="82" y="175" text-anchor="middle" font-size="17" font-weight="900" fill="#1B1B1B">Builder</text>
+  <text x="82" y="196" text-anchor="middle" font-size="12.5" fill="#4A4A4A">plain-English idea</text>
+  <text x="82" y="213" text-anchor="middle" font-size="12.5" fill="#4A4A4A">+ chat edits</text>
+  <!-- finder -->
+  <rect x="205" y="25" width="200" height="100" rx="12" fill="#D01012"/>
+  <text x="305" y="55" text-anchor="middle" font-size="18" font-weight="900" fill="#FFFFFF">Finder agent</text>
+  <text x="305" y="78" text-anchor="middle" font-size="12" fill="#FFE5E5">search_parts · part_colors</text>
+  <text x="305" y="96" text-anchor="middle" font-size="12" fill="#FFE5E5">add_part</text>
+  <text x="305" y="114" text-anchor="middle" font-size="11" fill="#FFE5E5">idea → sections → parts</text>
+  <!-- refiner -->
+  <rect x="205" y="245" width="200" height="100" rx="12" fill="#FFCF00"/>
+  <text x="305" y="275" text-anchor="middle" font-size="18" font-weight="900" fill="#1B1B1B">Refiner agent</text>
+  <text x="305" y="298" text-anchor="middle" font-size="12" fill="#4A3B00">change_color · set_quantity</text>
+  <text x="305" y="316" text-anchor="middle" font-size="12" fill="#4A3B00">replace_part · add_part · remove</text>
+  <text x="305" y="334" text-anchor="middle" font-size="11" fill="#4A3B00">chat message → list edits</text>
+  <!-- parts list -->
+  <rect x="460" y="125" width="190" height="120" rx="12" fill="#0055BF"/>
+  <text x="555" y="158" text-anchor="middle" font-size="18" font-weight="900" fill="#FFFFFF">Parts list</text>
+  <text x="555" y="180" text-anchor="middle" font-size="12" fill="#DCE8FA">shared state</text>
+  <text x="555" y="200" text-anchor="middle" font-size="12" fill="#DCE8FA">every edit checked:</text>
+  <text x="555" y="217" text-anchor="middle" font-size="12" fill="#DCE8FA">real part? made in that color?</text>
+  <text x="555" y="234" text-anchor="middle" font-size="12" fill="#DCE8FA">under the caps?</text>
+  <!-- catalog -->
+  <rect x="460" y="278" width="190" height="62" rx="10" fill="#F3F1EA" stroke="#BDB8A8" stroke-width="2"/>
+  <text x="555" y="303" text-anchor="middle" font-size="14" font-weight="900" fill="#1B1B1B">LEGO catalog (SQLite)</text>
+  <text x="555" y="322" text-anchor="middle" font-size="11.5" fill="#4A4A4A">27,117 parts · 59,436 part+colors</text>
+  <!-- checker -->
+  <rect x="700" y="25" width="185" height="100" rx="12" fill="#00852B"/>
+  <text x="792" y="55" text-anchor="middle" font-size="18" font-weight="900" fill="#FFFFFF">Checker agent</text>
+  <text x="792" y="78" text-anchor="middle" font-size="12" fill="#DDF3E3">find_substitutes</text>
+  <text x="792" y="96" text-anchor="middle" font-size="12" fill="#DDF3E3">suggest_swap · add_note</text>
+  <text x="792" y="114" text-anchor="middle" font-size="11" fill="#DDF3E3">rare parts, missing pieces</text>
+  <!-- export -->
+  <rect x="700" y="245" width="185" height="100" rx="12" fill="#1B1B1B"/>
+  <text x="792" y="277" text-anchor="middle" font-size="16" font-weight="900" fill="#FFFFFF">Wanted List XML</text>
+  <text x="792" y="298" text-anchor="middle" font-size="12" fill="#CCCCCC">upload to BrickLink</text>
+  <text x="792" y="316" text-anchor="middle" font-size="12" fill="#FFCF00">a person clicks Buy</text>
+  <text x="792" y="334" text-anchor="middle" font-size="11" fill="#CCCCCC">(the app never buys)</text>
+  <!-- arrows -->
+  <path d="M150 165 C 175 120, 180 90, 203 80" fill="none" stroke="#4A4A4A" stroke-width="2.2" marker-end="url(#ar)"/>
+  <text x="150" y="112" font-size="12" font-weight="800" fill="#4A4A4A">1 describe</text>
+  <path d="M150 205 C 175 250, 180 280, 203 290" fill="none" stroke="#4A4A4A" stroke-width="2.2" marker-end="url(#ar)"/>
+  <text x="150" y="268" font-size="12" font-weight="800" fill="#4A4A4A">3 chat</text>
+  <path d="M405 90 C 430 110, 440 140, 458 160" fill="none" stroke="#4A4A4A" stroke-width="2.2" marker-end="url(#ar)"/>
+  <path d="M405 285 C 430 265, 440 235, 458 215" fill="none" stroke="#4A4A4A" stroke-width="2.2" marker-end="url(#ar)"/>
+  <path d="M650 150 C 670 120, 680 100, 698 85" fill="none" stroke="#4A4A4A" stroke-width="2.2" marker-end="url(#ar)"/>
+  <text x="652" y="108" font-size="12" font-weight="800" fill="#4A4A4A">2 review</text>
+  <path d="M720 125 C 700 160, 680 175, 652 185" fill="none" stroke="#00852B" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+  <text x="680" y="205" font-size="11" fill="#00852B">swap ideas</text>
+  <path d="M650 220 C 670 250, 680 270, 698 285" fill="none" stroke="#4A4A4A" stroke-width="2.2" marker-end="url(#ar)"/>
+  <text x="652" y="268" font-size="12" font-weight="800" fill="#4A4A4A">4 export</text>
+  <path d="M555 276 L555 247" fill="none" stroke="#BDB8A8" stroke-width="2" marker-end="url(#ar)"/>
+  <!-- guardrails -->
+  <rect x="15" y="360" width="870" height="32" rx="8" fill="#FDF1F1" stroke="#F3B9B9"/>
+  <text x="450" y="381" text-anchor="middle" font-size="12.5" font-weight="800" fill="#8A0C0D">Guardrails on every run: injection filter · step limit per agent · session + daily token budgets · 300/part, 3,000-piece, 60-part caps</text>
+</svg>

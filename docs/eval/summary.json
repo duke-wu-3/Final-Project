@@ -1,0 +1,93 @@
+{
+  "low": {
+    "runs": 6,
+    "mean_cost": 0.0018506666666666667,
+    "mean_secs": 17.433333333333334,
+    "mean_calls": 8,
+    "mean_input": 28630.333333333332,
+    "mean_cached": 19621.166666666668,
+    "mean_output": 1155.6666666666667,
+    "cached_share": 0.6853279156139759,
+    "essentials": "32/33",
+    "mean_parts": 14.333333333333334,
+    "failures": 0
+  },
+  "medium": {
+    "runs": 6,
+    "mean_cost": 0.0038638333333333333,
+    "mean_secs": 30.950000000000003,
+    "mean_calls": 8.333333333333334,
+    "mean_input": 44793.5,
+    "mean_cached": 29281.333333333332,
+    "mean_output": 3318.8333333333335,
+    "cached_share": 0.653696034766949,
+    "essentials": "32/33",
+    "mean_parts": 18.666666666666668,
+    "failures": 0
+  },
+  "known_answer": {
+    "runs": 5,
+    "perfect": 5,
+    "mean_cost": 0.0013134,
+    "mean_secs": 12.26
+  },
+  "baseline": {
+    "runs": 5,
+    "mean_right": 3.6,
+    "min": 3,
+    "max": 5
+  },
+  "safety": {
+    "passed": 9,
+    "total": 9
+  },
+  "walkthrough": {
+    "find_secs": 14.1,
+    "chat_secs": 5.6,
+    "find_usage": {
+      "input": 13322,
+      "cached": 4471,
+      "cache_write": 7134,
+      "output": 1468,
+      "reasoning": 394,
+      "cost": 0.00184216,
+      "cache_hits": 0,
+      "calls": 5,
+      "by_agent": {
+        "finder": {
+          "input": 10926,
+          "cached": 4471,
+          "output": 970,
+          "cost": 0.00131716,
+          "calls": 3
+        },
+        "checker": {
+          "input": 2396,
+          "cached": 0,
+          "output": 498,
+          "cost": 0.000525,
+          "calls": 2
+        }
+      }
+    },
+    "chat_usage": {
+      "input": 4989,
+      "cached": 3581,
+      "cache_write": 1396,
+      "output": 104,
+      "reasoning": 0,
+      "cost": 0.00026351,
+      "cache_hits": 0,
+      "calls": 4,
+      "by_agent": {
+        "refiner": {
+          "input": 4989,
+          "cached": 3581,
+          "output": 104,
+          "cost": 0.00026351,
+          "calls": 4
+        }
+      }
+    }
+  }
+}

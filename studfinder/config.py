@@ -24,7 +24,7 @@ REASONING_EFFORT = os.getenv("STUDFINDER_REASONING", "low")
 PRICES = {"input": 0.10, "cached_input": 0.01, "cache_write": 0.125, "output": 0.50}
 
 # --- Guardrails -------------------------------------------------------------
-MAX_OUTPUT_TOKENS = 1500          # per model response
+MAX_OUTPUT_TOKENS = 2500          # per model response (reasoning + reply)
 MAX_STEPS = {"finder": 14, "checker": 6, "refiner": 8}  # model calls per agent run
 SESSION_TOKEN_BUDGET = 250_000    # one browser session, all runs combined
 DAILY_TOKEN_BUDGET = 3_000_000    # whole app per day (read from logs/usage.jsonl)

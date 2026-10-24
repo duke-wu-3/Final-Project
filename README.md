@@ -72,6 +72,17 @@ data/bricklink_colors.csv  Rebrickable -> BrickLink color ids
 scripts/build_catalog.py   rebuilds catalog.db from Rebrickable CSVs (optional)
 ```
 
+## Project documents and tests
+
+| File | What it is |
+|---|---|
+| `report.html`, `slides.html` | Final report and slide deck. Self-contained: open by double-clicking. |
+| `docs/friend_test_kit.html` | Step-by-step real-user test with timers. It copies the results at the end. |
+| `scripts/evaluate.py` | AI-run tests: 6 builds × 2 reasoning settings, a known-answer accuracy test, and 9 safety attacks. Writes `docs/eval/results.json`. |
+| `scripts/baseline_no_tools.py` | Same request to the same model with no tools (the "just ask a chatbot" baseline). |
+| `scripts/screenshots.py` | Drives the app with Playwright and saves the report's screenshots. |
+| `scripts/build_docs.py` | Rebuilds `report.html` / `slides.html` from `docs/*_src.html` with images embedded. |
+
 ## Known limits
 
 - Part numbers come from Rebrickable. They match BrickLink for most standard parts, but a few differ.

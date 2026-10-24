@@ -15,13 +15,12 @@ import re
 import time
 from typing import Any, Callable
 
-from . import catalog
+from . import catalog, config
 from .config import (
     DAILY_TOKEN_BUDGET,
     MAX_CHAT_CHARS,
     MAX_DESCRIPTION_CHARS,
     MAX_OUTPUT_TOKENS,
-    MAX_STEPS,
     MODEL,
     REASONING_EFFORT,
     SESSION_TOKEN_BUDGET,
@@ -249,21 +248,30 @@ def _check_budget(s: Session) -> None:
         raise BudgetExceeded("StudFinder hit its daily token budget. Try again tomorrow.")
 
 
-def run_agent(s: Session, agent: str, instructions: str, user_input: str, tool_names: list[str]) -> str:
+def run_agent(s: Session, agent: str, instructions: str, user_input: str, tool_names: list[str],
+              effort: str | None = None) -> str:
     tools = [TOOLS[n][0] for n in tool_names]
     inp: list[dict] = [{"role": "user", "content": user_input}]
-    for _ in range(MAX_STEPS[agent]):
+    for _ in range(config.MAX_STEPS[agent]):
         _check_budget(s)
-        r = client().responses.create(
+        raw = client().responses.with_raw_response.create(
             model=MODEL, instructions=instructions, input=inp, tools=tools,
-            max_output_tokens=MAX_OUTPUT_TOKENS, reasoning={"effort": REASONING_EFFORT},
+            max_output_tokens=MAX_OUTPUT_TOKENS, reasoning={"effort": effort or REASONING_EFFORT},
             store=False, include=["reasoning.encrypted_content"],
         )
-        s.record_usage(agent, _usage(r.usage))
+        r = raw.parse()
+        # Portkey answers repeated identical requests from its cache: no model call, no model cost.
+        cache_hit = raw.headers.get("x-portkey-cache-status", "").upper() == "HIT"
+        s.record_usage(agent, _usage(r.usage), cache_hit=cache_hit)
         inp += [o.model_dump(exclude_none=True) for o in r.output]
         calls = [o for o in r.output if o.type == "function_call"]
         if not calls:
             text = (r.output_text or "").strip()
+            if not text:  # ran out of output tokens while thinking: nudge it to finish instead of failing silently
+                s.trace.append({"agent": agent, "kind": "limit", "text": "Empty reply (output limit). Asking it to continue.",
+                                "t": time.strftime("%H:%M:%S")})
+                inp.append({"role": "user", "content": "Continue. Use your tools to finish the task, then reply briefly."})
+                continue
             s.trace.append({"agent": agent, "kind": "say", "text": _short(text, 400), "t": time.strftime("%H:%M:%S")})
             return text
         for c in calls:
@@ -277,14 +285,14 @@ def run_agent(s: Session, agent: str, instructions: str, user_input: str, tool_n
                             "t": time.strftime("%H:%M:%S")})
             inp.append({"type": "function_call_output", "call_id": c.call_id,
                         "output": json.dumps(result, separators=(",", ":"))})
-    s.block("step limit", f"{agent} stopped after {MAX_STEPS[agent]} model calls")
-    s.trace.append({"agent": agent, "kind": "limit", "text": f"Stopped at the {MAX_STEPS[agent]}-call limit.",
+    s.block("step limit", f"{agent} stopped after {config.MAX_STEPS[agent]} model calls")
+    s.trace.append({"agent": agent, "kind": "limit", "text": f"Stopped at the {config.MAX_STEPS[agent]}-call limit.",
                     "t": time.strftime("%H:%M:%S")})
     return ""
 
 
 # --- what the API calls --------------------------------------------------------
-def find_parts(s: Session, description: str) -> None:
+def find_parts(s: Session, description: str, effort: str | None = None) -> None:
     description = description.strip()[:MAX_DESCRIPTION_CHARS]
     s.description = description
     s.items.clear()
@@ -296,12 +304,14 @@ def find_parts(s: Session, description: str) -> None:
         return
     s.running = "finder"
     s.summary = run_agent(s, "finder", FINDER_PROMPT, f"Build description:\n{description}",
-                          ["search_parts", "part_colors", "add_part"])
+                          ["search_parts", "part_colors", "add_part"], effort)
+    if not s.items and not s.summary:
+        s.error = "The Finder stopped without building a list. Try again, or add a little more detail."
     if s.items:
         s.running = "checker"
         run_agent(s, "checker", CHECKER_PROMPT,
                   f"Build description:\n{description}\n\nParts list:\n{s.compact_list()}",
-                  ["find_substitutes", "suggest_swap", "add_note"])
+                  ["find_substitutes", "suggest_swap", "add_note"], effort)
 
 
 def refine(s: Session, message: str) -> None:

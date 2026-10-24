@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StudFinder friend test (about 15 minutes)</title>
+<style>
+  :root { --red:#D01012; --red-d:#A10C0E; --yellow:#FFCF00; --yellow-d:#D9A800; --blue:#0055BF; --blue-d:#003F8E;
+          --green:#00852B; --ink:#1B1B1B; --ink2:#4A4A4A; --muted:#777; --bg:#F3F1EA; --line:#E4E1D8; }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink);
+         font-size: 17px; line-height: 1.5; }
+  header { background: var(--yellow); border-bottom: 5px solid var(--yellow-d); padding: 14px 24px; }
+  header h1 { margin: 0; font-size: 24px; font-weight: 900; }
+  header p { margin: 2px 0 0; font-weight: 600; color: #4A3B00; }
+  .progress { height: 8px; background: #E9E5D8; }
+  .progress div { height: 100%; background: var(--blue); width: 0; transition: width .3s; }
+  main { max-width: 760px; margin: 24px auto 60px; padding: 0 16px; }
+  .card { background: #fff; border: 2px solid var(--line); box-shadow: 0 4px 0 var(--line); border-radius: 16px; padding: 24px; }
+  h2 { margin: 0 0 6px; font-size: 24px; font-weight: 900; }
+  .who { display: inline-block; font-size: 13px; font-weight: 800; padding: 2px 10px; border-radius: 999px; margin-bottom: 10px; }
+  .who.friend { background: #E3F0FF; color: var(--blue-d); } .who.duke { background: #FFF3C4; color: #6B5000; }
+  .muted { color: var(--muted); } .small { font-size: 14px; }
+  .btn { border: none; border-radius: 12px; padding: 13px 22px; font-weight: 800; font-size: 17px; cursor: pointer; color: #fff;
+         text-decoration: none; display: inline-block; }
+  .btn:active { transform: translateY(2px); }
+  .btn.red { background: var(--red); box-shadow: 0 4px 0 var(--red-d); }
+  .btn.blue { background: var(--blue); box-shadow: 0 4px 0 var(--blue-d); }
+  .btn.green { background: var(--green); box-shadow: 0 4px 0 #006420; }
+  .btn.ghost { background: #fff; color: var(--ink); border: 2px solid var(--line); box-shadow: 0 3px 0 var(--line); }
+  .btn:disabled { opacity: .4; cursor: not-allowed; }
+  .nav { display: flex; justify-content: space-between; margin-top: 22px; gap: 10px; }
+  .timer { font-size: 54px; font-weight: 900; font-variant-numeric: tabular-nums; text-align: center; margin: 10px 0; }
+  .timer.running { color: var(--red); }
+  .timerbox { background: #FAF9F5; border: 2px dashed var(--line); border-radius: 14px; padding: 14px; text-align: center; margin: 16px 0; }
+  ol.parts { padding-left: 0; list-style: none; counter-reset: p; }
+  ol.parts li { counter-increment: p; display: grid; grid-template-columns: 34px 1fr 150px; gap: 10px; align-items: center;
+                padding: 10px 0; border-bottom: 1px dashed var(--line); }
+  ol.parts li::before { content: counter(p); width: 30px; height: 30px; border-radius: 8px; background: var(--blue); color: #fff;
+                        display: grid; place-items: center; font-weight: 900; }
+  ol.parts.checks li { grid-template-columns: 34px 1fr 60px; }
+  input[type=text], textarea { width: 100%; border: 2px solid var(--line); border-radius: 10px; padding: 10px 12px; font-size: 16px;
+                               font-family: inherit; background: #FCFBF8; }
+  input[type=text]:focus, textarea:focus { outline: none; border-color: var(--blue); background: #fff; }
+  input[type=checkbox] { width: 26px; height: 26px; accent-color: var(--green); }
+  label.q { display: block; font-weight: 800; margin: 18px 0 6px; }
+  .scale { display: flex; gap: 8px; flex-wrap: wrap; }
+  .scale button { flex: 1; min-width: 60px; padding: 10px; border-radius: 10px; border: 2px solid var(--line); background: #fff;
+                  font-weight: 800; font-size: 16px; cursor: pointer; }
+  .scale button.on { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .scale-ends { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .copybox { background: #F4F7FC; border: 2px solid #D6E2F5; border-radius: 12px; padding: 14px; white-space: pre-wrap;
+             font-family: ui-monospace, Menlo, monospace; font-size: 13.5px; max-height: 360px; overflow: auto; }
+  .tip { background: #FFFBEA; border-left: 5px solid var(--yellow); padding: 10px 14px; margin: 14px 0; }
+  .key { background: #F1F8F3; border-left: 5px solid var(--green); padding: 10px 14px; margin: 14px 0; }
+  .ok { color: var(--green); font-weight: 900; } .no { color: var(--red); font-weight: 900; }
+  .paste { background: #F4F7FC; border: 2px solid #D6E2F5; border-radius: 10px; padding: 12px; font-style: italic; }
+  code { background: #F1F1F1; padding: 1px 6px; border-radius: 6px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>StudFinder friend test</h1>
+  <p>About 15 minutes. You're testing the app, not yourself: there are no wrong answers.</p>
+</header>
+<div class="progress"><div id="bar"></div></div>
+<main>
+
+  <!-- 0: setup (Duke) -->
+  <section class="card step" data-step="0">
+    <span class="who duke">For Duke, before your friend sits down</span>
+    <h2>Get ready (1 minute)</h2>
+    <ol>
+      <li>In Terminal, in the project folder, run <code>python app.py</code>. StudFinder should open at
+        <a href="http://localhost:8000" target="_blank">localhost:8000</a>. Leave it open in a tab.</li>
+      <li>Open <a href="https://www.bricklink.com/catalog.asp" target="_blank">BrickLink's catalog</a> in another tab.</li>
+      <li>Hand the laptop to your friend on the next screen. Don't help with the tasks; just watch and note what confuses them.</li>
+    </ol>
+    <div class="nav"><span></span><button class="btn blue" data-next>Ready, hand it over →</button></div>
+  </section>
+
+  <!-- 1: welcome (friend) -->
+  <section class="card step" data-step="1" hidden>
+    <span class="who friend">For you, the tester</span>
+    <h2>Thanks for helping!</h2>
+    <p>You'll find the same 6 LEGO parts two ways: first by hand on BrickLink, then with StudFinder. Then 5 quick questions.</p>
+    <label class="q" for="name">Your first name (or leave blank to stay anonymous)</label>
+    <input type="text" id="name" data-save placeholder="e.g. Alex">
+    <label class="q"><input type="checkbox" id="quoteOk" data-save> It's OK for Duke to quote what I say in his class report</label>
+    <label class="q">How much have you built your own LEGO creations (MOCs)?</label>
+    <div class="scale" data-scale="experience">
+      <button>Never</button><button>A few times</button><button>Often</button>
+    </div>
+    <div class="nav"><button class="btn ghost" data-back>← Back</button><button class="btn blue" data-next>Start task 1 →</button></div>
+  </section>
+
+  <!-- 2: task A (friend) -->
+  <section class="card step" data-step="2" hidden>
+    <span class="who friend">Task 1 of 2: the old way</span>
+    <h2>Find these 6 parts on BrickLink</h2>
+    <p>You're stocking up for a little coffee shop build. Use <a href="https://www.bricklink.com/catalog.asp" target="_blank"><b>BrickLink's search</b></a>
+      (any way you like) to find each part, then type its <b>part number</b> in the box. Skip any you can't find.
+      <b>Stop at 8 minutes</b> even if you're not done.</p>
+    <div class="timerbox">
+      <div class="timer" id="timerA">0:00</div>
+      <button class="btn red" id="startA">Start timer</button>
+      <button class="btn green" id="stopA" hidden>I'm done</button>
+    </div>
+    <ol class="parts" id="partsA"></ol>
+    <div class="nav"><button class="btn ghost" data-back>← Back</button><button class="btn blue" data-next id="nextA" disabled>Next →</button></div>
+  </section>
+
+  <!-- 3: task B (friend) -->
+  <section class="card step" data-step="3" hidden>
+    <span class="who friend">Task 2 of 2: with StudFinder</span>
+    <h2>Now get the same parts with StudFinder</h2>
+    <ol>
+      <li>Press <b>Start timer</b>.</li>
+      <li>Go to the <a href="http://localhost:8000" target="_blank"><b>StudFinder tab</b></a>. In "Describe your build", type the request below in your own words (or copy it):</li>
+    </ol>
+    <p class="paste" id="pasteText">For my coffee shop I need: sand green 1x2 bricks with a brick-texture (masonry) face, a white 1x2x3 window
+      frame with clear glass, a white door frame for a 1x4x6 door, a few small red 1x1 "cheese" slopes, a black street lamp post,
+      and a white 1x2 to 1x2 bracket for attaching things sideways.</p>
+    <p><button class="btn ghost" id="copyPaste">Copy this text</button></p>
+    <ol start="3">
+      <li>Click <b>Find my parts</b>, wait for the list, then click <b>Download Wanted List</b>.</li>
+      <li>Come back here and press <b>I'm done</b>.</li>
+    </ol>
+    <div class="timerbox">
+      <div class="timer" id="timerB">0:00</div>
+      <button class="btn red" id="startB">Start timer</button>
+      <button class="btn green" id="stopB" hidden>I'm done</button>
+    </div>
+    <div id="checkB" hidden>
+      <div class="key"><b>Check StudFinder's list.</b> Tick each part StudFinder's list included. The right part numbers are shown so you can compare.</div>
+      <ol class="parts checks" id="partsB"></ol>
+    </div>
+    <div class="nav"><button class="btn ghost" data-back>← Back</button><button class="btn blue" data-next id="nextB" disabled>Next →</button></div>
+  </section>
+
+  <!-- 4: questions (friend) -->
+  <section class="card step" data-step="4" hidden>
+    <span class="who friend">Last part: 5 quick questions</span>
+    <h2>What did you think?</h2>
+    <label class="q">1. How easy was finding parts on BrickLink by hand?</label>
+    <div class="scale" data-scale="easeA"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button></div>
+    <div class="scale-ends"><span>Very hard</span><span>Very easy</span></div>
+    <label class="q">2. How easy was StudFinder?</label>
+    <div class="scale" data-scale="easeB"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button></div>
+    <div class="scale-ends"><span>Very hard</span><span>Very easy</span></div>
+    <label class="q">3. Would you use StudFinder for your next build?</label>
+    <div class="scale" data-scale="wouldUse"><button>Yes</button><button>Maybe</button><button>No</button></div>
+    <label class="q" for="wrong">4. What did StudFinder get wrong, or what confused you?</label>
+    <textarea id="wrong" data-save rows="3" placeholder="Anything at all, even small things"></textarea>
+    <label class="q" for="quote">5. In one sentence, what would you tell a friend about StudFinder?</label>
+    <textarea id="quote" data-save rows="2" placeholder="Your honest words"></textarea>
+    <div class="nav"><button class="btn ghost" data-back>← Back</button><button class="btn blue" data-next>Finish →</button></div>
+  </section>
+
+  <!-- 5: Duke's checks -->
+  <section class="card step" data-step="5" hidden>
+    <span class="who duke">For Duke (your friend is done, thank them!)</span>
+    <h2>Two quick notes from you</h2>
+    <label class="q" for="observed">What did you see while watching? Where did they get stuck or slow down?</label>
+    <textarea id="observed" data-save rows="3" placeholder="e.g. spent 3 minutes on the cheese slope; didn't know the name 'bracket'"></textarea>
+    <label class="q">BrickLink upload check: log in to BrickLink → <b>Want</b> → <b>Upload</b>, and upload the Wanted List file StudFinder downloaded.</label>
+    <div class="row">
+      <input type="text" id="blAccepted" data-save placeholder="How many items did BrickLink accept? e.g. 6 of 6" style="margin-bottom:8px">
+      <input type="text" id="blRejected" data-save placeholder="Any part numbers BrickLink didn't recognize? (or 'none')">
+    </div>
+    <p class="small muted">Skip the upload if you can't log in right now. You can fill it in later; this page saves as you type.</p>
+    <div class="nav"><button class="btn ghost" data-back>← Back</button><button class="btn blue" data-next>See results →</button></div>
+  </section>
+
+  <!-- 6: results -->
+  <section class="card step" data-step="6" hidden>
+    <span class="who duke">Done: send this to Claude</span>
+    <h2>Results</h2>
+    <p>Click <b>Copy results</b> and paste them into your chat with Claude. Claude will put the numbers and quote into the report and slides.</p>
+    <div class="copybox" id="results"></div>
+    <div class="nav">
+      <button class="btn ghost" data-back>← Back</button>
+      <span><button class="btn ghost" id="download">Download .txt</button> <button class="btn green" id="copyResults">Copy results</button></span>
+    </div>
+    <p class="small muted" style="margin-top:16px">Testing a second friend? <a href="#" id="restart">Start a new test</a> (copy these results first).</p>
+  </section>
+
+</main>
+
+<script>
+const PARTS = [
+  { need: "A 1×2 brick with a brick-texture (masonry) face, in sand green", answer: "98283", accept: ["98283"] },
+  { need: "A white window frame, 1 deep × 2 wide × 3 tall, the kind that holds clear glass", answer: "60593 (glass: 60602)", accept: ["60593"] },
+  { need: "A white door frame for a 1×4×6 door", answer: "60596", accept: ["60596", "30179"] },
+  { need: "A small red 1×1 slope, the one builders call a \"cheese slope\"", answer: "54200", accept: ["54200", "50746"] },
+  { need: "A black street lamp post", answer: "11062", accept: ["11062", "2039"] },
+  { need: "A white bracket 1×2 to 1×2, for attaching things sideways", answer: "99781", accept: ["99781", "99780"] },
+];
+const CAP_A = 8 * 60;
+const KEY = "studfinder_friend_test";
+let data = JSON.parse(localStorage.getItem(KEY) || "{}");
+data.step = data.step || 0;
+data.a = data.a || {}; data.b = data.b || {};
+const $ = (id) => document.getElementById(id);
+const save = () => localStorage.setItem(KEY, JSON.stringify(data));
+const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+const esc = (s) => String(s || "").replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+const steps = [...document.querySelectorAll(".step")];
+
+function show(n) {
+  data.step = Math.max(0, Math.min(steps.length - 1, n)); save();
+  steps.forEach((s, i) => (s.hidden = i !== data.step));
+  $("bar").style.width = (100 * data.step / (steps.length - 1)) + "%";
+  if (data.step === 6) renderResults();
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll("[data-next]").forEach((b) => b.addEventListener("click", () => show(data.step + 1)));
+document.querySelectorAll("[data-back]").forEach((b) => b.addEventListener("click", () => show(data.step - 1)));
+
+// text fields + checkboxes autosave
+document.querySelectorAll("[data-save]").forEach((el) => {
+  const k = el.id;
+  if (el.type === "checkbox") { el.checked = !!data[k]; el.addEventListener("change", () => { data[k] = el.checked; save(); }); }
+  else { el.value = data[k] || ""; el.addEventListener("input", () => { data[k] = el.value; save(); }); }
+});
+// button scales
+document.querySelectorAll("[data-scale]").forEach((box) => {
+  const k = box.dataset.scale;
+  box.querySelectorAll("button").forEach((b) => {
+    if (data[k] === b.textContent) b.classList.add("on");
+    b.addEventListener("click", () => { box.querySelectorAll("button").forEach((x) => x.classList.remove("on")); b.classList.add("on"); data[k] = b.textContent; save(); });
+  });
+});
+
+// Task A: inputs
+$("partsA").innerHTML = PARTS.map((p, i) => `<li><span>${esc(p.need)}</span><input type="text" data-a="${i}" placeholder="part number" value="${esc(data.a[i])}"></li>`).join("");
+$("partsA").addEventListener("input", (e) => { if (e.target.dataset.a !== undefined) { data.a[e.target.dataset.a] = e.target.value.trim(); save(); } });
+// Task B: checkboxes
+$("partsB").innerHTML = PARTS.map((p, i) => `<li><span>${esc(p.need)} <span class="muted small">→ ${esc(p.answer)}</span></span><input type="checkbox" data-b="${i}" ${data.b[i] ? "checked" : ""}></li>`).join("");
+$("partsB").addEventListener("change", (e) => { if (e.target.dataset.b !== undefined) { data.b[e.target.dataset.b] = e.target.checked; save(); } });
+
+function makeTimer(id, startBtn, stopBtn, cap, onStop) {
+  let t0 = null, tick = null;
+  const el = $(id);
+  const stop = (auto) => {
+    clearInterval(tick); el.classList.remove("running");
+    data[id] = Math.round((Date.now() - t0) / 1000); data[id + "Capped"] = !!auto; save();
+    el.textContent = fmt(data[id]) + (auto ? " (time's up)" : "");
+    $(startBtn).hidden = true; $(stopBtn).hidden = true; onStop();
+  };
+  if (data[id] != null) { el.textContent = fmt(data[id]) + (data[id + "Capped"] ? " (time's up)" : ""); $(startBtn).hidden = true; onStop(); }
+  $(startBtn).addEventListener("click", () => {
+    t0 = Date.now(); el.classList.add("running"); $(startBtn).hidden = true; $(stopBtn).hidden = false;
+    tick = setInterval(() => { const s = (Date.now() - t0) / 1000; el.textContent = fmt(s); if (cap && s >= cap) stop(true); }, 250);
+  });
+  $(stopBtn).addEventListener("click", () => stop(false));
+}
+makeTimer("timerA", "startA", "stopA", CAP_A, () => ($("nextA").disabled = false));
+makeTimer("timerB", "startB", "stopB", 0, () => { $("nextB").disabled = false; $("checkB").hidden = false; });
+
+$("copyPaste").addEventListener("click", () => navigator.clipboard.writeText($("pasteText").textContent.replace(/\s+/g, " ").trim()).then(() => ($("copyPaste").textContent = "Copied ✓")));
+
+function scoreA() {
+  return PARTS.map((p, i) => {
+    const v = (data.a[i] || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+    return { given: data.a[i] || "", ok: !!v && p.accept.some((a) => v === a || v.startsWith(a)) };
+  });
+}
+
+function resultsText() {
+  const a = scoreA(); const aOk = a.filter((x) => x.ok).length;
+  const bOk = PARTS.filter((_, i) => data.b[i]).length;
+  const lines = [
+    "STUDFINDER FRIEND TEST: RESULTS",
+    `Date: ${new Date().toLocaleString()}`,
+    `Tester: ${data.name || "anonymous"} | OK to quote: ${data.quoteOk ? "yes" : "no"} | MOC experience: ${data.experience || "-"}`,
+    "",
+    `Task 1, BrickLink by hand: ${aOk}/6 correct in ${data.timerA != null ? fmt(data.timerA) : "-"}${data.timerACapped ? " (hit the 8-minute cap)" : ""}`,
+    ...PARTS.map((p, i) => `   ${i + 1}. wanted ${p.answer} | typed "${a[i].given || "(blank)"}" ${a[i].ok ? "correct" : "wrong/missing"}`),
+    `Task 2, StudFinder: ${bOk}/6 included in ${data.timerB != null ? fmt(data.timerB) : "-"}`,
+    ...PARTS.map((p, i) => `   ${i + 1}. ${p.answer}: ${data.b[i] ? "included" : "missing"}`),
+    "",
+    `Ease, BrickLink by hand: ${data.easeA || "-"}/5 | Ease, StudFinder: ${data.easeB || "-"}/5 | Would use: ${data.wouldUse || "-"}`,
+    `Got wrong / confusing: ${data.wrong || "-"}`,
+    `Quote: "${data.quote || "-"}"`,
+    "",
+    `Duke observed: ${data.observed || "-"}`,
+    `BrickLink upload: accepted ${data.blAccepted || "-"} | not recognized: ${data.blRejected || "-"}`,
+  ];
+  return lines.join("\n");
+}
+function renderResults() { $("results").textContent = resultsText(); }
+$("copyResults").addEventListener("click", () => navigator.clipboard.writeText(resultsText()).then(() => ($("copyResults").textContent = "Copied ✓ Paste it to Claude")));
+$("download").addEventListener("click", () => {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([resultsText()], { type: "text/plain" }));
+  a.download = `studfinder-test-${(data.name || "anonymous").toLowerCase()}.txt`; a.click();
+});
+$("restart").addEventListener("click", (e) => { e.preventDefault(); if (confirm("Clear this test and start a new one?")) { localStorage.removeItem(KEY); location.reload(); } });
+
+show(data.step);
+</script>
+</body>
+</html>
