@@ -1,0 +1,147 @@
+rb_color_id,rb_name,bl_color_id,bl_name
+0,Black,11,Black
+1,Blue,7,Blue
+2,Green,6,Green
+3,Dark Turquoise,39,Dark Turquoise
+4,Red,5,Red
+5,Dark Pink,47,Dark Pink
+6,Brown,8,Brown
+7,Light Gray,9,Light Gray
+8,Dark Gray,10,Dark Gray
+9,Light Blue,62,Light Blue
+10,Bright Green,36,Bright Green
+11,Light Turquoise,40,Light Turquoise
+12,Salmon,25,Salmon
+13,Pink,23,Pink
+14,Yellow,3,Yellow
+15,White,1,White
+17,Light Green,38,Light Green
+18,Light Yellow,33,Light Yellow
+19,Tan,2,Tan
+20,Light Violet,44,Light Violet
+21,Glow In Dark Opaque,46,Glow In Dark Opaque
+22,Purple,24,Purple
+25,Orange,4,Orange
+26,Magenta,71,Magenta
+27,Lime,34,Lime
+28,Dark Tan,69,Dark Tan
+29,Bright Pink,104,Bright Pink
+30,Medium Lavender,157,Medium Lavender
+31,Lavender,154,Lavender
+33,Trans-Dark Blue,14,Trans-Dark Blue
+34,Trans-Green,20,Trans-Green
+35,Trans-Bright Green,108,Trans-Bright Green
+36,Trans-Red,17,Trans-Red
+40,Trans-Brown,13,Trans-Brown
+41,Trans-Light Blue,15,Trans-Light Blue
+42,Trans-Neon Green,16,Trans-Neon Green
+45,Trans-Dark Pink,50,Trans-Dark Pink
+46,Trans-Yellow,19,Trans-Yellow
+47,Trans-Clear,12,Trans-Clear
+52,Trans-Purple,51,Trans-Purple
+54,Trans-Neon Yellow,121,Trans-Neon Yellow
+57,Trans-Neon Orange,18,Trans-Neon Orange
+60,Chrome Antique Brass,57,Chrome Antique Brass
+61,Chrome Blue,52,Chrome Blue
+62,Chrome Green,64,Chrome Green
+63,Chrome Pink,82,Chrome Pink
+64,Chrome Black,122,Chrome Black
+68,Very Light Orange,96,Very Light Orange
+69,Light Purple,93,Light Purple
+70,Reddish Brown,88,Reddish Brown
+71,Light Bluish Gray,86,Light Bluish Gray
+72,Dark Bluish Gray,85,Dark Bluish Gray
+73,Medium Blue,42,Medium Blue
+74,Medium Green,37,Medium Green
+78,Light Nougat,90,Light Nougat
+79,Milky White,60,Milky White
+80,Metallic Silver,67,Metallic Silver
+81,Metallic Green,70,Metallic Green
+82,Metallic Gold,65,Metallic Gold
+84,Medium Nougat,150,Medium Nougat
+85,Dark Purple,89,Dark Purple
+86,Light Brown,91,Light Brown
+89,Royal Blue,97,Royal Blue
+92,Nougat,28,Nougat
+100,Light Salmon,26,Light Salmon
+110,Violet,43,Violet
+114,Glitter Trans-Dark Pink,100,Glitter Trans-Dark Pink
+115,Medium Lime,76,Medium Lime
+117,Glitter Trans-Clear,101,Glitter Trans-Clear
+118,Aqua,41,Aqua
+120,Light Lime,35,Light Lime
+125,Light Orange,32,Light Orange
+129,Glitter Trans-Purple,102,Glitter Trans-Purple
+134,Copper,84,Copper
+135,Pearl Light Gray,66,Pearl Light Gray
+137,Pearl Sand Blue,78,Pearl Sand Blue
+142,Pearl Light Gold,61,Pearl Light Gold
+143,Trans-Medium Blue,74,Trans-Medium Blue
+148,Pearl Dark Gray,77,Pearl Dark Gray
+150,Pearl Very Light Gray,119,Pearl Very Light Gray
+151,Very Light Bluish Gray,99,Very Light Bluish Gray
+158,Yellowish Green,158,Yellowish Green
+178,Flat Dark Gold,81,Flat Dark Gold
+179,Flat Silver,95,Flat Silver
+182,Trans-Orange,98,Trans-Orange
+183,Pearl White,83,Pearl White
+191,Bright Light Orange,110,Bright Light Orange
+212,Bright Light Blue,105,Bright Light Blue
+216,Rust,27,Rust
+226,Bright Light Yellow,103,Bright Light Yellow
+230,Trans-Pink,107,Trans-Pink
+232,Sky Blue,87,Sky Blue
+236,Trans-Light Purple,114,Trans-Light Purple
+272,Dark Blue,63,Dark Blue
+288,Dark Green,80,Dark Green
+294,Glow In Dark Trans,118,Glow In Dark Trans
+297,Pearl Gold,115,Pearl Gold
+308,Dark Brown,120,Dark Brown
+313,Maersk Blue,72,Maersk Blue
+320,Dark Red,59,Dark Red
+321,Dark Azure,153,Dark Azure
+322,Medium Azure,156,Medium Azure
+323,Light Aqua,152,Light Aqua
+326,Olive Green,155,Olive Green
+334,Chrome Gold,21,Chrome Gold
+335,Sand Red,58,Sand Red
+351,Medium Dark Pink,94,Medium Dark Pink
+366,Earth Orange,29,Earth Orange
+373,Sand Purple,54,Sand Purple
+378,Sand Green,48,Sand Green
+379,Sand Blue,55,Sand Blue
+383,Chrome Silver,22,Chrome Silver
+450,Fabuland Brown,106,Fabuland Brown
+462,Medium Orange,31,Medium Orange
+484,Dark Orange,68,Dark Orange
+503,Very Light Gray,49,Very Light Gray
+1000,Glow in Dark White,159,Glow In Dark White
+1001,Medium Violet,73,Medium Violet
+1002,Glitter Trans-Neon Green,163,Glitter Trans-Neon Green
+1003,Glitter Trans-Light Blue,162,Glitter Trans-Light Blue
+1012,Fabuland Orange,160,Fabuland Orange
+1050,Coral,220,Coral
+1052,Glitter Trans-Orange,222,Glitter Trans-Orange
+1057,Trans-Light Bright Green,226,Trans-Light Bright Green
+1058,Trans-Light Green,221,Trans-Light Green
+1065,Reddish Gold,235,Reddish Gold
+1067,Dark Nougat,225,Dark Nougat
+1069,Pearl Red,252,Pearl Red
+1070,Pearl Blue,254,Pearl Blue
+1071,Pearl Green,253,Pearl Green
+1072,Pearl Brown,255,Pearl Brown
+1073,Pearl Black,244,Pearl Black
+1077,Fabuland Lime,248,Fabuland Lime
+1088,Medium Brown,240,Medium Brown
+1091,Warm Yellowish Orange,172,Warm Yellowish Orange
+1092,Metallic Copper,250,Metallic Copper
+1093,Light Lilac,246,Light Lilac
+1094,Trans-Medium Purple,234,Trans-Medium Purple
+1095,Trans-Black,251,Trans-Black
+1136,Reddish Orange,167,Reddish Orange
+1140,Neon Orange,165,Neon Orange
+1141,Neon Green,166,Neon Green
+1142,Dark Olive Green,242,Dark Olive Green
+1145,Ochre Yellow,173,Ochre Yellow
+1146,Warm Pink,175,Warm Pink
+1147,Blue Violet,174,Blue Violet

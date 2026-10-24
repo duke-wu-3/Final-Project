@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StudFinder: describe your build, get the parts</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='10' width='28' height='18' rx='3' fill='%23D01012'/%3E%3Crect x='6' y='4' width='8' height='7' rx='2' fill='%23D01012'/%3E%3Crect x='18' y='4' width='8' height='7' rx='2' fill='%23D01012'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 64 40" aria-hidden="true">
+        <rect x="2" y="12" width="60" height="26" rx="4" fill="#D01012"/>
+        <rect x="8" y="4" width="14" height="10" rx="3" fill="#D01012"/>
+        <rect x="25" y="4" width="14" height="10" rx="3" fill="#D01012"/>
+        <rect x="42" y="4" width="14" height="10" rx="3" fill="#D01012"/>
+        <rect x="2" y="33" width="60" height="5" rx="2" fill="#A10C0E"/>
+      </svg>
+      <div>
+        <h1>StudFinder</h1>
+        <p class="tagline">Describe your build. Get the exact LEGO parts. Send the list to BrickLink.</p>
+      </div>
+    </div>
+    <button class="btn ghost small" id="resetBtn" title="Clear everything and start over">Start over</button>
+  </header>
+
+  <main class="layout">
+    <!-- Left: describe + chat -->
+    <section class="col left">
+      <div class="card">
+        <h2><span class="step red">1</span> Describe your build</h2>
+        <p class="hint">Say it like you would to a friend. Colors, size, and the vibe are enough. No part numbers needed.</p>
+        <textarea id="desc" maxlength="1500" rows="7" placeholder="e.g. A small coffee shop storefront for my LEGO town: sand green walls, white trim, big front windows, a door in the middle, a striped awning, about 16 studs wide."></textarea>
+        <div class="examples">
+          <span class="muted">Try:</span>
+          <button class="chip" data-example="storefront">Coffee shop storefront</button>
+          <button class="chip" data-example="bakery">Corner bakery</button>
+          <button class="chip" data-example="bookshop">Tiny bookshop</button>
+        </div>
+        <div class="row between">
+          <span class="muted small" id="descCount">0 / 1500</span>
+          <button class="btn red" id="findBtn">Find my parts</button>
+        </div>
+      </div>
+
+      <div class="card" id="chatCard">
+        <h2><span class="step yellow">2</span> Refine with chat</h2>
+        <p class="hint">Ask for changes: "make the walls dark tan", "add 4 lamps", "fewer 1x1 bricks".</p>
+        <div class="chatlog" id="chatlog"><p class="muted small center" id="chatEmpty">Find your parts first, then chat here to tweak the list.</p></div>
+        <form class="chatbox" id="chatForm">
+          <input id="chatInput" maxlength="500" autocomplete="off" placeholder="Type a change and press Enter" disabled>
+          <button class="btn yellow small" id="chatBtn" disabled>Send</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Center: parts list -->
+    <section class="col center">
+      <div class="card parts-card">
+        <div class="row between wrap">
+          <h2><span class="step blue">3</span> Your parts</h2>
+          <div class="totals" id="totals"></div>
+        </div>
+        <div id="status" class="status" hidden></div>
+        <div id="errorBox" class="errorbox" hidden></div>
+        <div id="summary" class="summary" hidden></div>
+        <div id="notes" class="notes" hidden></div>
+        <div id="parts">
+          <div class="empty">
+            <svg viewBox="0 0 160 90" aria-hidden="true">
+              <rect x="20" y="52" width="60" height="30" rx="4" fill="#0055BF"/><rect x="28" y="44" width="14" height="10" rx="3" fill="#0055BF"/><rect x="58" y="44" width="14" height="10" rx="3" fill="#0055BF"/>
+              <rect x="80" y="52" width="60" height="30" rx="4" fill="#FFCF00"/><rect x="88" y="44" width="14" height="10" rx="3" fill="#FFCF00"/><rect x="118" y="44" width="14" height="10" rx="3" fill="#FFCF00"/>
+              <rect x="50" y="22" width="60" height="30" rx="4" fill="#D01012"/><rect x="58" y="14" width="14" height="10" rx="3" fill="#D01012"/><rect x="88" y="14" width="14" height="10" rx="3" fill="#D01012"/>
+            </svg>
+            <p><b>Your parts list shows up here.</b><br>Every part is checked against the real LEGO catalog, about 27,000 parts.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card exportbar" id="exportBar" hidden>
+        <div>
+          <h3>Send it to BrickLink</h3>
+          <p class="hint small">Download the Wanted List file, then on BrickLink go to <b>Want &rarr; Upload</b>, paste or upload it, and use <b>Buy All</b> to pick stores.</p>
+          <p class="warn small" id="skippedNote" hidden></p>
+        </div>
+        <div class="row gap">
+          <button class="btn ghost" id="copyBtn">Copy XML</button>
+          <a class="btn blue" id="downloadBtn" href="#">Download Wanted List</a>
+          <a class="btn ghost" href="https://www.bricklink.com/v2/wanted/upload.page" target="_blank" rel="noopener">Open BrickLink</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: agents, cost, safety -->
+    <aside class="col right">
+      <div class="card">
+        <h3>Agent activity</h3>
+        <div class="agents">
+          <span class="agent-pill finder" id="pill-finder">Finder</span>
+          <span class="agent-pill checker" id="pill-checker">Checker</span>
+          <span class="agent-pill refiner" id="pill-refiner">Refiner</span>
+        </div>
+        <ol class="trace" id="trace"><li class="muted small">Nothing yet.</li></ol>
+      </div>
+      <div class="card">
+        <h3>Cost of the last run</h3>
+        <div class="meter" id="runMeter"><p class="muted small">Runs show their token use and cost here.</p></div>
+        <h3 class="mt">This session</h3>
+        <div id="sessionMeter"><p class="muted small">$0.0000</p></div>
+        <div class="budget"><div class="budget-fill" id="budgetFill"></div></div>
+        <p class="muted small" id="budgetText"></p>
+      </div>
+      <div class="card">
+        <h3>Safety log</h3>
+        <p class="hint small">Things the app stopped: made-up parts, impossible colors, giant quantities, prompt injection, budget limits.</p>
+        <ul class="safety" id="safety"><li class="muted small">Nothing blocked yet.</li></ul>
+      </div>
+    </aside>
+  </main>
+
+  <div class="toast" id="toast" hidden></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
