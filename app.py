@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+import json
 import os
 import threading
-import uuid
+import time
 import webbrowser
 
 import uvicorn
@@ -14,7 +15,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from studfinder import agents
-from studfinder.config import MAX_CHAT_CHARS, MAX_DESCRIPTION_CHARS, ROOT, SESSION_TOKEN_BUDGET, client
+from studfinder.config import LOGS, MAX_CHAT_CHARS, MAX_DESCRIPTION_CHARS, ROOT, SESSION_TOKEN_BUDGET, client
 from studfinder.export import bricklink_xml
 from studfinder.state import Session
 
@@ -142,6 +143,39 @@ def export(session_id: str):
                     headers={"Content-Disposition": 'attachment; filename="studfinder-wanted-list.xml"'})
 
 
+class KitIn(BaseModel):
+    text: str
+    answers: dict
+    studfinder_session: str = ""
+
+
+@app.get("/kit")
+def kit():
+    """The friend test kit, served from the app so a remote tester needs only one link."""
+    return FileResponse(ROOT / "docs" / "friend_test_kit.html")
+
+
+@app.post("/api/kit-results")
+def kit_results(body: KitIn):
+    out = LOGS / "friend_tests"
+    out.mkdir(parents=True, exist_ok=True)
+    if len(body.text) > 8000 or len(json.dumps(body.answers)) > 20000:
+        raise HTTPException(413, "Too large.")
+    if len(list(out.glob("*.json"))) >= 50:
+        raise HTTPException(429, "Too many submissions.")
+    s = SESSIONS.get(body.studfinder_session)
+    record = {
+        "received": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "text": body.text,
+        "answers": body.answers,
+        "studfinder_session": s.to_json() if s else None,  # the tester's actual list, tokens, and cost
+    }
+    name = time.strftime("%Y%m%d-%H%M%S") + ".json"
+    (out / name).write_text(json.dumps(record, indent=2))
+    print(f"\n  Friend test results received -> logs/friend_tests/{name}\n", flush=True)
+    return {"ok": True}
+
+
 @app.get("/api/health")
 def health():
     try:
@@ -161,5 +195,6 @@ if __name__ == "__main__":
     port = args.port
     if not args.no_browser:
         threading.Timer(1.2, lambda: webbrowser.open(f"http://localhost:{port}")).start()
-    print(f"\n  StudFinder running at http://localhost:{port}  (Ctrl+C to stop)\n")
+    print(f"\n  StudFinder running at http://localhost:{port}  (Ctrl+C to stop)")
+    print(f"  Friend test kit at   http://localhost:{port}/kit\n", flush=True)
     uvicorn.run(app, host="127.0.0.1", port=port, reload=False, log_level="warning")
