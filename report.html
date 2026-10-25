@@ -80,7 +80,8 @@
   <li><b>Wrong parts:</b> many parts look alike ("1 x 2 x 2" and "1 x 2 x 3" windows; "Type 1" and "Type 2" door frames). Ordering the wrong one means another order and another shipping fee.</li>
   <li><b>Dead ends:</b> a part a builder picks may never have been made in the color they want, or may be rare and expensive. BrickLink only shows this after you look the part up.</li>
 </ul>
-<p><b>Why anyone should care.</b> The hard part of a MOC should be the creative part. Today, getting from an idea to a buyable parts list is a chore that pushes new builders back to official sets. StudFinder removes that step.</p>
+<p><b>Two ways people build MOCs.</b> Some builders <b>design digitally</b> first, in 3D software like BrickLink Studio, which already exports a parts list and makes instructions. Many others <b>free-build</b>: they gather a palette of parts in their color scheme and work the model out by hand, with no instructions. StudFinder is for the second group, and for builders who want to start with real parts rather than learn 3D software. What they need is not instructions; it is <b>the right palette of parts</b>: the window that fits, the bracket that lets the sign hang sideways, in colors that exist. StudFinder does <b>not</b> produce building instructions (see Limits).</p>
+<p><b>Why anyone should care.</b> The hard part of a MOC should be the creative part. Today, getting from an idea to a buyable palette of parts is a chore that pushes new builders back to official sets. StudFinder removes that step.</p>
 
 <!-- 3. WHAT IS NEW -->
 <h2>2. What is new here</h2>
@@ -95,6 +96,7 @@
   <tr><td>ChatGPT or another plain chatbot</td><td>Understands plain English</td><td>Gets part numbers wrong (see the test below), does not know which colors exist, cannot export.</td></tr>
   <tr class="us"><td>StudFinder</td><td colspan="2">Plain-English idea in, a parts list checked against the real catalog out, as a BrickLink upload file. Flags rare parts and suggests easier-to-buy swaps.</td></tr>
 </table>
+<p>StudFinder is not trying to be another 3D designer. It covers the step that no tool covers: going from an idea to a buyable palette of parts, for people who build by hand or have not designed anything yet.</p>
 <p><b>Why not just ask ChatGPT?</b> I tested this directly. I gave the same model StudFinder uses (<code>gpt-6-luna</code>) a request for 7 specific parts, with no tools, the way someone would ask a chatbot. I ran it 5 times and checked its part numbers against the real catalog.</p>
 <table>
   <tr><th>Same 7-part request, 5 runs each</th><th class="num">Right part numbers</th><th>Notes</th></tr>
@@ -236,13 +238,15 @@
 <h3>What doesn't work yet</h3>
 <ul>
   <li><b>Part numbers come from Rebrickable.</b> They match BrickLink for most standard parts, but a few differ; for example, Rebrickable's 6141 is BrickLink's 4073. BrickLink's upload page flags any it does not recognize. <span class="pending" data-slot="limits-upload">[Pending: result of uploading a StudFinder file to BrickLink.]</span></li>
-  <li><b>It does not check that the parts actually build the model.</b> There is no 3D model or stability check. The Checker catches obvious gaps, such as a door frame with no door, but not every gap.</li>
+  <li><b>No building instructions, and no check that the parts build the model.</b> StudFinder gives a palette of parts, not a design. That suits free-builders, but a builder who wants step-by-step instructions still has to design the model, for example in BrickLink Studio. The Checker catches obvious gaps, such as a door frame with no door, but not every gap. <span class="pending" data-slot="limits-use">[Pending friend test: what the tester said they would do with a parts list for their own idea, and what would make StudFinder more useful.]</span></li>
   <li><b>No prices yet.</b> Price checks and choosing stores are left to BrickLink's "Buy All".</li>
   <li><b>Small evaluation.</b> One real user, and the tasks were always done in the same order (by hand first), so the tester knew the parts better by Task 2. The AI tests use 6 builds and 5 repeat runs.</li>
   <li><b>The injection filter is shallow</b> (see Safety). The caps and catalog checks are the real protection.</li>
 </ul>
 <h3>With another month</h3>
 <ol>
+  <li><b>"Open in Studio":</b> export the list as an LDraw model file, a standard format BrickLink Studio imports, with the parts laid out like a tray. The builder designs with exactly those parts, and Studio produces the instructions and a final parts list.</li>
+  <li><b>Suggested build steps, then designs:</b> start with a short, section-by-section build plan from the agents, clearly marked as a rough guide. Fully generated, buildable models are still early research, and today's prototypes only handle simple brick-only models.</li>
   <li><b>Exact BrickLink part numbers:</b> use Rebrickable's API to map every part number once when building the catalog.</li>
   <li><b>Live prices:</b> use BrickLink's price data so the Checker can trade off cost against looks, for example "swap this rare part and save $8."</li>
   <li><b>"What I already own":</b> import a builder's sets from Rebrickable and subtract those parts before buying.</li>

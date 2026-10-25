@@ -71,7 +71,7 @@
   <section class="card step" data-step="0">
     <h2>Hi, and thanks for helping!</h2>
     <p>Duke built <b>StudFinder</b> for his AI class final project. You describe a LEGO build in plain English, and it finds the exact parts and makes a BrickLink shopping list.</p>
-    <p>You'll find the same 6 LEGO parts <b>two ways</b>: first by hand on BrickLink, then with StudFinder. Then 6 quick questions. At the end, one button sends your answers to Duke.</p>
+    <p>You'll find the same 6 LEGO parts <b>two ways</b>: first by hand on BrickLink, then with StudFinder. Then 8 quick questions. At the end, one button sends your answers to Duke.</p>
     <div class="tip">Use a laptop or desktop (not a phone), and do it in one sitting so the timers are fair. No accounts or downloads needed.</div>
     <label class="q" for="name">Your first name (or leave blank to stay anonymous)</label>
     <input type="text" id="name" data-save placeholder="e.g. Alex">
@@ -130,7 +130,7 @@
 
   <!-- 3: questions -->
   <section class="card step" data-step="3" hidden>
-    <span class="who friend">Last part: 6 quick questions</span>
+    <span class="who friend">Last part: 8 quick questions</span>
     <h2>What did you think?</h2>
     <label class="q">1. How easy was finding parts on BrickLink by hand?</label>
     <div class="scale" data-scale="easeA"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button></div>
@@ -144,7 +144,16 @@
     <textarea id="stuck" data-save rows="3" placeholder="e.g. didn't know what a 'cheese slope' is called on BrickLink"></textarea>
     <label class="q" for="wrong">5. What did StudFinder get wrong, or what confused you?</label>
     <textarea id="wrong" data-save rows="3" placeholder="Anything at all, even small things"></textarea>
-    <label class="q" for="quote">6. In one sentence, what would you tell a friend about StudFinder?</label>
+    <label class="q">6. If StudFinder gave you a parts list for <i>your own</i> idea, what would you most likely do with it?</label>
+    <div class="scale" data-scale="useList" style="flex-direction:column">
+      <button>Buy the parts and build freely, figuring it out as I go</button>
+      <button>Design it in Studio or another app first, then buy</button>
+      <button>Nothing: it's only useful with step-by-step instructions</button>
+      <button>Not sure</button>
+    </div>
+    <label class="q" for="wish">7. What would make StudFinder more useful for you? (optional)</label>
+    <textarea id="wish" data-save rows="2" placeholder="e.g. instructions, prices, showing what I already own"></textarea>
+    <label class="q" for="quote">8. In one sentence, what would you tell a friend about StudFinder?</label>
     <textarea id="quote" data-save rows="2" placeholder="Your honest words"></textarea>
     <div class="nav"><button class="btn ghost" data-back>← Back</button><button class="btn blue" data-next>Finish →</button></div>
   </section>
@@ -258,6 +267,8 @@ function resultsText() {
     `Ease, BrickLink by hand: ${data.easeA || "-"}/5 | Ease, StudFinder: ${data.easeB || "-"}/5 | Would use: ${data.wouldUse || "-"}`,
     `Stuck or slow: ${data.stuck || "-"}`,
     `Got wrong / confusing: ${data.wrong || "-"}`,
+    `What they'd do with a parts list for their own idea: ${data.useList || "-"}`,
+    `Would make it more useful: ${data.wish || "-"}`,
     `Quote: "${data.quote || "-"}"`,
   ].join("\n");
 }
