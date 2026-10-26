@@ -8,7 +8,7 @@ import time
 from dataclasses import asdict, dataclass, field
 from datetime import date
 
-from . import catalog
+from . import catalog, prices
 from .config import (
     LOGS,
     MAX_LOTS,
@@ -164,8 +164,12 @@ class Session:
     def compact_list(self) -> str:
         if not self.items:
             return "(empty)"
+        def cost(i: Item) -> str:
+            p = prices.price(i.part_num, i.color_id)
+            return f" | about ${p:.2f} each" if p is not None else ""
+
         return "\n".join(
-            f"#{i.id} {i.part_num} {i.name} | {i.color} | x{i.qty} | {i.section} | {i.rarity} ({i.sets} sets)"
+            f"#{i.id} {i.part_num} {i.name} | {i.color} | x{i.qty} | {i.section} | {i.rarity} ({i.sets} sets){cost(i)}"
             for i in self.items.values()
         )
 
@@ -190,8 +194,22 @@ class Session:
         return self.session_usage.get("input", 0) + self.session_usage.get("output", 0)
 
     def to_json(self) -> dict:
-        items = [asdict(i) for i in self.items.values()]
+        items = []
+        est_total, priced = 0.0, 0
+        for i in self.items.values():
+            d = asdict(i)
+            d["price_each"] = prices.price(i.part_num, i.color_id)
+            d["price_few_sales"] = prices.few_sales(i.part_num, i.color_id)
+            if d["price_each"] is not None:
+                est_total += d["price_each"] * i.qty
+                priced += 1
+            if i.suggestion:
+                c = catalog.resolve_color(i.suggestion["color"])
+                d["suggestion"] = {**i.suggestion, "price_each": prices.price(i.suggestion["part_num"], c["id"]) if c else None}
+            items.append(d)
         return {
+            "estimate": {"total": round(est_total, 2), "priced": priced, "parts": len(items),
+                         "date": prices.snapshot_date()},
             "description": self.description,
             "items": items,
             "total_pieces": self.total_pieces(),

@@ -1,0 +1,17 @@
+priced 25 of 25/397
+priced 50 of 50/397
+priced 75 of 75/397
+priced 100 of 100/397
+priced 125 of 125/397
+priced 149 of 150/397
+priced 174 of 175/397
+priced 199 of 200/397
+priced 224 of 225/397
+priced 249 of 250/397
+priced 274 of 275/397
+priced 299 of 300/397
+priced 324 of 325/397
+priced 349 of 350/397
+priced 374 of 375/397
+
+priced 396 of 397 combos; no price for 1: ['32123b/14']

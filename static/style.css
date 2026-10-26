@@ -102,6 +102,8 @@ textarea:focus, .chatbox input:focus { outline: none; border-color: var(--blue);
 .badge.common { background: #E3F4E8; color: var(--green-dark); }
 .badge.uncommon { background: #FFF3C4; color: #7A5A00; }
 .badge.rare { background: #FDE2E2; color: #8A0C0D; }
+.price { font-weight: 800; color: var(--blue-dark); }
+.tot.money { background: #E3F4E8; border-color: #BFE3CA; color: var(--green-dark); }
 .qty { display: flex; align-items: center; gap: 4px; }
 .qty button { width: 30px; height: 30px; border-radius: 8px; border: 2px solid var(--line); background: #fff;
   font-weight: 900; cursor: pointer; }

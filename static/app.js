@@ -2,6 +2,7 @@ const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const money = (n) => "$" + (n || 0).toFixed(4);
 const num = (n) => (n || 0).toLocaleString();
+const usd = (n) => "$" + (n < 0.1 ? n.toFixed(3) : n.toFixed(2));
 
 let sid = localStorage.getItem("studfinder_sid");
 if (!sid) { sid = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()).slice(0, 36); localStorage.setItem("studfinder_sid", sid); }
@@ -57,8 +58,14 @@ function render(s) {
 
   // totals
   const rare = s.items.filter((i) => i.rarity !== "common").length;
+  const est = s.estimate || {};
   $("totals").innerHTML = s.items.length
     ? `<span class="tot">${s.items.length} parts</span><span class="tot">${num(s.total_pieces)} pieces</span>${rare ? `<span class="tot">${rare} hard to find</span>` : ""}`
+      + (est.priced ? `<span class="tot money" title="BrickLink estimate for ${est.priced} of ${est.parts} parts">≈ $${est.total.toFixed(2)}${est.priced < est.parts ? "*" : ""} est.</span>` : "")
+    : "";
+  $("priceNote").textContent = est.priced
+    ? `Price estimates: average price new parts sold for on BrickLink over the last 6 months (snapshot ${est.date}), not including shipping.`
+      + (est.priced < est.parts ? ` *${est.parts - est.priced} part${est.parts - est.priced > 1 ? "s have" : " has"} no price yet and ${est.parts - est.priced > 1 ? "aren't" : "isn't"} in the total.` : "")
     : "";
 
   renderParts(s);
@@ -92,6 +99,7 @@ function renderParts(s) {
             <span class="pn">${esc(i.part_num)}</span>
             <span class="color"><span class="swatch" style="background:#${esc(i.rgb)}"></span>${esc(i.color)}</span>
             <span class="badge ${esc(i.rarity)}" title="Appears in ${i.sets} official sets; last made ${i.last_year}">${esc(i.rarity)} · ${i.sets} sets · ${i.last_year}</span>
+            ${i.price_each != null ? `<span class="price" title="BrickLink 6-month average, new">≈ ${usd(i.price_each)} each · ${usd(i.price_each * i.qty)}${i.price_few_sales ? ` <span class="muted" title="Based on fewer than 10 sales">(few sales)</span>` : ""}</span>` : `<span class="muted">no price yet</span>`}
           </div>
         </div>
         <div class="row gap">
@@ -107,7 +115,7 @@ function renderParts(s) {
             ${i.suggestion.img ? `<img src="${esc(i.suggestion.img)}" alt="">` : ""}
             <div class="grow"><b>Checker suggests:</b> ${esc(i.suggestion.name)} in
               <span class="color"><span class="swatch" style="background:#${esc(i.suggestion.rgb)}"></span>${esc(i.suggestion.color)}</span>
-              (${i.suggestion.sets} sets). <span class="muted">${esc(i.suggestion.reason)}</span></div>
+              (${i.suggestion.sets} sets${i.suggestion.price_each != null ? `, ≈ ${usd(i.suggestion.price_each)} each` : ""}). <span class="muted">${esc(i.suggestion.reason)}</span></div>
             <button class="btn blue small" data-act="swap" ${locked}>Swap</button>
           </div>` : ""}
       </div>`).join("")}

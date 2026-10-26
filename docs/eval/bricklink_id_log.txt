@@ -1,0 +1,31 @@
+  6141 -> 4073 (Plate, Round 1 x 1)
+  3069b -> 3069 (Tile 1 x 2)
+  3062b -> 3062 (Brick, Round  1 x 1)
+  4032a -> 4032 (Plate, Round 2 x 2 with Axle Hole)
+  3068b -> 3068 (Tile 2 x 2)
+  3070b -> 3070 (Tile 1 x 1)
+  3040b -> 3040 (Slope 45 2 x 1)
+  59900 -> 4589 (Cone 1 x 1)
+checked 50/378
+  60897 -> 4085a (Plate, Modified 1 x 1 with Open O Clip Thin (Vertical Grip))
+  32123b -> 4265b (Technic Bush 1/2 Toothed with 2 Interior Ridges)
+checked 100/378
+  59443 -> 6538a (Technic, Axle Connector 2L (Ridged with + Hole + Orientation))
+  15672 -> 92946 (Slope 45 2 x 1 with 2/3 Cutout)
+  61332 -> 2780 (Technic, Pin with Short Friction Ridges)
+checked 150/378
+  88072 -> 4623a (Plate, Modified 1 x 2 with Bar Arm Up (Horizontal Arm 6mm))
+  11153 -> 61678 (Slope, Curved 4 x 1)
+checked 200/378
+  4865a -> 4865 (Panel 1 x 2 x 1)
+checked 250/378
+  4079b -> 4079 (Minifigure, Utensil Seat / Chair 2 x 2)
+checked 300/378
+  2454b -> 2454 (Brick 1 x 2 x 5)
+  59426 -> 32209 (Technic, Axle  5.5L with Stop)
+  42924 -> 6558 (Technic, Pin 3L with Friction Ridges)
+  44302a -> 44302 (Hinge Plate 1 x 2 Locking with 2 Fingers on End)
+checked 350/378
+  60616b -> 60616 (Door 1 x 4 x 6 with Stud Handle)
+
+checked 378 parts: 352 same id, 22 renamed, 4 not found: ['298c02', '73983', '15207', '30367c']

@@ -62,10 +62,11 @@ CHECKER_PROMPT = """You are the Checker agent in StudFinder. The Finder agent ju
 new MOC builder. Your job is quality control before they buy anything.
 
 How to work:
-1. For each item marked uncommon or rare, call find_substitutes with its item id. If a substitute keeps
+1. For each item marked uncommon or rare, or priced over $1.00 each, call find_substitutes with its item id. If a substitute keeps
    the same look (same shape in a close color, or a near-identical part in the same color), call
    suggest_swap with the substitute's part_num, color, and a short reason (under 15 words).
-   Do not suggest swaps for common items. Never swap to something rarer.
+   Do not suggest swaps for common items that cost under $1.00 each. Never swap to something rarer. Some items and options show a
+   BrickLink price estimate; if a swap is also cheaper, say roughly how much it saves per piece.
 2. Check that the list makes sense for the build description. Look for missing essentials (a door for a
    storefront, glass for windows, a base to build on, tiles to finish the top), colors that do not match
    the description, and quantities that look far off. Record each problem with add_note: one plain

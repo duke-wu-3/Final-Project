@@ -11,6 +11,8 @@ import sqlite3
 import threading
 from pathlib import Path
 
+from . import prices
+
 DB = Path(__file__).resolve().parents[1] / "data" / "catalog.db"
 
 # How many official sets a part-in-a-color has appeared in.
@@ -238,4 +240,9 @@ def substitutes(part_num: str, color_id: int, limit: int = 6) -> list[dict]:
         for r in rows:
             out.append({"kind": "similar part, same color", "part_num": r["part_num"], "name": r["name"],
                         "color": color["name"], "sets": r["n_sets"]})
+    for o in out:
+        c = resolve_color(o["color"])
+        p = prices.price(o["part_num"], c["id"]) if c else None
+        if p is not None:
+            o["price_each"] = round(p, 3)
     return out[:limit]

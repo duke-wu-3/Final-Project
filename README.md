@@ -29,7 +29,8 @@ You need Python 3.10+ and an internet connection (part photos load from Rebricka
 
 1. **Describe your build**, or click an example such as *Coffee shop storefront*, then click **Find my parts**.
 2. Watch the **Finder** agent search the catalog and the **Checker** agent review the list (right panel).
-3. Fix things by chatting with the **Refiner**: "make the walls dark tan", "add 2 lamp posts".
+3. Check the **price estimates**: each part shows a BrickLink price and line total, with the list total at the top.
+   Fix things by chatting with the **Refiner**: "make the walls dark tan", "add 2 lamp posts".
    Or use the + / − buttons and the **Swap** button on the Checker's suggestions.
 4. Click **Copy for BrickLink**. On BrickLink's **Want → Upload** page, choose the **Upload BrickLink XML format**
    tab (the file tab does not take XML), paste, and click **Proceed to verify items**. Then use **Buy All** to pick stores.
@@ -81,12 +82,16 @@ scripts/build_catalog.py   rebuilds catalog.db from Rebrickable CSVs (optional)
 | `scripts/evaluate.py` | AI-run tests: 6 builds × 2 reasoning settings, a known-answer accuracy test, and 9 safety attacks. Writes `docs/eval/results.json`. |
 | `scripts/baseline_no_tools.py` | Same request to the same model with no tools (the "just ask a chatbot" baseline). |
 | `scripts/screenshots.py` | Drives the app with Playwright and saves the report's screenshots. |
+| `scripts/map_bricklink_ids.py` | Checks the most common parts against BrickLink's catalog and writes `data/bricklink_part_ids.csv` (e.g. 3069b → 3069). |
+| `scripts/fetch_bricklink_prices.py` | Snapshot of BrickLink 6-month average prices, saved to `data/bricklink_prices.csv`. The app reads the file and never calls BrickLink. |
 | `scripts/build_docs.py` | Rebuilds `report.html` / `slides.html` from `docs/*_src.html` with images embedded. |
 
 ## Known limits
 
-- Part numbers come from Rebrickable. They match BrickLink for most standard parts, but a few differ.
-  BrickLink's upload page flags any it does not recognize.
+- Part numbers come from Rebrickable. The 378 most common parts are checked against BrickLink (22 translated on export);
+  rarer parts are not, and BrickLink's upload page flags any it does not recognize.
+- Prices are a dated snapshot of the most common part-and-color combinations. Other parts show "no price yet".
+  Shipping is not included.
 - Colors without a BrickLink match (rare Modulex and Opal colors) are left out of the export, and the app
   lists them.
 
