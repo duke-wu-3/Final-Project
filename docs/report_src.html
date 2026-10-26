@@ -133,7 +133,7 @@
   <li><b>Checker reviews.</b> It recorded two real problems: <i>"The door frame has only a 1×2 tile listed for glazing, not a door panel, so the storefront door is incomplete"</i>, and <i>"The single 2×16 base plate is too narrow to support the listed floor pieces."</i> In the browser run it also flagged a rare door frame (7 sets, last made in 2009) and suggested a near-identical one that appeared in 79 sets (Figure 4).</li>
   <li><b>Time and cost.</b> Finder plus Checker took 14.1 seconds and cost $0.0018.</li>
   <li><b>Refine by chat.</b> "Make the walls dark tan instead of sand green, and add 2 black lamp posts out front." The Refiner recolored all three wall parts in one <code>change_color</code> call, searched for a lamp post, added 2, and replied in one sentence. That took 5.6 seconds and cost $0.0003 (Figure 5).</li>
-  <li><b>Export.</b> "Download Wanted List" produces BrickLink's upload format, with BrickLink's own color numbers (Figure 8).</li>
+  <li><b>Export.</b> "Copy for BrickLink" produces BrickLink's XML upload format, with BrickLink's own color numbers, to paste on BrickLink's upload page (Figure 8).</li>
 </ol>
 
 <div class="fig"><img src="screenshots/01_home.jpg" alt="StudFinder home screen"><div class="cap"><b>Figure 2.</b> The home screen: describe the build (left), parts list (center), agent activity, cost, and safety log (right).</div></div>
@@ -253,7 +253,7 @@
   <li><b>Photo input:</b> photograph a build you like and get a starting list.</li>
   <li><b>Host it online</b> with logins, and test it with a LEGO user group to get a larger sample.</li>
 </ol>
-<div class="fig"><img src="screenshots/09_export.jpg" alt="Export bar"><div class="cap"><b>Figure 8.</b> The last step: download or copy the Wanted List, then upload it on BrickLink.</div></div>
+<div class="fig"><img src="screenshots/09_export.jpg" alt="Export bar"><div class="cap"><b>Figure 8.</b> The last step: copy the Wanted List and paste it into the "Upload BrickLink XML format" tab of BrickLink's upload page. BrickLink's file-upload tab does not take XML; I found that out in my own upload test.</div></div>
 <div class="fig"><img src="screenshots/05_chat.jpg" alt="Chat refine" style="max-width:45%"><div class="cap"><b>Figure 5.</b> Refining by chat: one request recolored the walls and added lamp posts.</div></div>
 <p class="small">LEGO® is a trademark of the LEGO Group, which does not sponsor or endorse this project. Part data and images © Rebrickable. Report written with AI assistance (Claude); every number comes from the app's own logs and test files in the repo.</p>
 </div>

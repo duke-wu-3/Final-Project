@@ -208,7 +208,7 @@ $("parts").addEventListener("change", async (ev) => {
 
 $("copyBtn").addEventListener("click", async () => {
   const xml = await (await fetch(`/api/export.xml?session_id=${encodeURIComponent(sid)}`)).text();
-  try { await navigator.clipboard.writeText(xml); toast("Wanted List XML copied. Paste it on BrickLink's upload page."); }
+  try { await navigator.clipboard.writeText(xml); toast("Copied. On BrickLink, paste it into the 'Upload BrickLink XML format' tab."); }
   catch { toast("Copy failed. Use Download instead."); }
 });
 

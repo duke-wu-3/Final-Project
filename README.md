@@ -31,8 +31,8 @@ You need Python 3.10+ and an internet connection (part photos load from Rebricka
 2. Watch the **Finder** agent search the catalog and the **Checker** agent review the list (right panel).
 3. Fix things by chatting with the **Refiner**: "make the walls dark tan", "add 2 lamp posts".
    Or use the + / − buttons and the **Swap** button on the Checker's suggestions.
-4. Click **Download Wanted List** (or **Copy XML**). On BrickLink go to **Want → Upload**, add the file,
-   and use **Buy All** to pick stores.
+4. Click **Copy for BrickLink**. On BrickLink's **Want → Upload** page, choose the **Upload BrickLink XML format**
+   tab (the file tab does not take XML), paste, and click **Proceed to verify items**. Then use **Buy All** to pick stores.
 
 ## How it works
 

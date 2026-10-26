@@ -21,7 +21,6 @@ def bricklink_xml(s: Session) -> tuple[str, list[str]]:
             f"    <ITEMID>{escape(it.part_num)}</ITEMID>",
             f"    <COLOR>{it.bl_color_id}</COLOR>",
             f"    <MINQTY>{it.qty}</MINQTY>",
-            "    <CONDITION>X</CONDITION>",
             f"    <REMARKS>{escape(it.section)}</REMARKS>",
             "  </ITEM>",
         ]
