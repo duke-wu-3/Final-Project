@@ -29,7 +29,7 @@
   .reveal img { margin: 0; border-radius: 10px; border: 2px solid #E4E1D8; }
   .pending { border: 3px dashed #D9A800; background: #FFF9DB; padding: 8px 14px; border-radius: 10px; color: #5C4600; font-size: 0.7em; }
   .stat { margin-bottom: 18px; }
-  .stat .lbl { font-size: 0.62em; color: var(--ink2); }
+  .stat .lbl { font-size: 0.72em; color: var(--ink2); }
 </style>
 </head>
 <body>
@@ -58,7 +58,7 @@
       </div>
       <div class="card">
         <div class="stat"><div class="big red">14 to 20</div><div class="lbl">separate searches for one small storefront</div></div>
-        <div class="pending" data-slot="slides-time">[Pending friend test: X of 6 parts found by hand in Y minutes]</div>
+        <div class="stat"><div class="big">3:16</div><div class="lbl">for a first-time builder to find 6 parts by hand · ease 1 out of 5</div></div>
       </div>
     </div>
   </section>
@@ -88,7 +88,7 @@
   <section>
     <h2>Demo</h2>
     <div class="cols">
-      <div style="flex:1.6"><img src="screenshots/03a_results_view.jpg" alt="App with a finished parts list" style="width:100%"></div>
+      <div style="flex:1.6"><img src="screenshots/11_prices.jpg" alt="App with a priced parts list" style="width:100%"></div>
       <div>
         <img src="screenshots/04_swap.jpg" alt="Swap" style="width:100%">
         <p class="muted" style="margin-top:10px">Checker: "rare, 7 sets, last made 2009" → suggests a part from 79 sets.</p>
@@ -140,10 +140,12 @@
     <h2>Impact: a real builder tried it</h2>
     <div class="cols">
       <div class="card">
-        <div class="pending" data-slot="slides-impact">[Pending friend test: by hand vs. StudFinder, time and parts correct]</div>
+        <div class="stat"><div class="big red" style="font-size:1.6em">3:16 → 0:31</div><div class="lbl">same 6 parts, by hand vs. StudFinder: <b>6.3× faster</b>, 6/6 correct both ways</div></div>
+        <div class="stat"><div class="big green" style="font-size:1.6em">1/5 → 5/5</div><div class="lbl">ease rating · would use it: <b>Yes</b></div></div>
       </div>
       <div>
-        <div class="pending" data-slot="slides-quote">[Pending friend test: quote]</div>
+        <p style="font-size:1.05em;font-weight:700">"I would tell them it is very useful, and speeds up the bricklink process a lot."</p><p class="muted">Rachel, first-time MOC builder</p>
+        <p class="muted" style="margin-top:14px">She asked for prices, so I added BrickLink price estimates the same day. She also asked for a way to make instructions: that's next.</p>
         <p class="muted" style="margin-top:20px">AI tests: 7/7 accuracy, about 17 s per list. A LEGO club of 200 could run it for about $5 a month.</p>
       </div>
     </div>
@@ -155,8 +157,8 @@
     <ul>
       <li><b>"Open in Studio"</b>: design with your exact parts, and let Studio make the instructions</li>
       <li><b>Suggested build steps</b> now; fully generated designs later (still early research)</li>
-      <li><b>Exact BrickLink part numbers</b> mapped through Rebrickable's API</li>
-      <li><b>Live prices</b>: "swap this rare part, save $8"</li>
+      <li><b>Live prices for any part</b> (968 common combinations are done)</li>
+      <li><b>Exact BrickLink numbers for every part</b> (the 378 most common are done)</li>
       <li><b>Subtract what you own</b>, using your Rebrickable collection</li>
       <li><b>Host it</b> and test with a LEGO user group</li>
     </ul>

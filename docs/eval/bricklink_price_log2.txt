@@ -1,0 +1,25 @@
+396 combos already priced; fetching 573 more
+priced 420 of 25/573
+priced 445 of 50/573
+priced 470 of 75/573
+priced 495 of 100/573
+priced 520 of 125/573
+priced 545 of 150/573
+priced 570 of 175/573
+priced 595 of 200/573
+priced 620 of 225/573
+priced 645 of 250/573
+priced 670 of 275/573
+priced 695 of 300/573
+priced 720 of 325/573
+priced 745 of 350/573
+priced 770 of 375/573
+priced 795 of 400/573
+priced 820 of 425/573
+priced 845 of 450/573
+priced 870 of 475/573
+priced 895 of 500/573
+priced 920 of 525/573
+priced 945 of 550/573
+
+968 combos priced in total; no price for 1 of the 573 new: ['32123b/14']

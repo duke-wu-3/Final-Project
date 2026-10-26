@@ -67,7 +67,7 @@
   <div><b>GitHub repo</b> <span><a href="https://github.com/duke-wu-3/Final-Project">https://github.com/duke-wu-3/Final-Project</a> (public)</span></div>
   <div><b>Clone</b> <span><code>git clone https://github.com/duke-wu-3/Final-Project.git</code>, then follow the README. Put <code>.env</code> in the repo folder or the folder above it.</span></div>
   <div><b>The app</b> <span>Runs locally with one command (<code>python app.py</code>, see the README). It is not hosted online.</span></div>
-  <div><b>One sentence</b> StudFinder's three AI agents turn a builder's idea, like "a sand green coffee shop with a striped awning", into a parts list checked against the real LEGO catalog, then export it as a BrickLink Wanted List the builder can buy from in one step.</div>
+  <div><b>One sentence</b> StudFinder's three AI agents turn a builder's idea, like "a sand green coffee shop with a striped awning", into a priced parts list checked against the real LEGO catalog, then export it as a BrickLink Wanted List the builder can buy from in one step.</div>
 </div>
 
 <!-- 2. MOTIVATION -->
@@ -76,7 +76,7 @@
 <p><b>How they deal with it today.</b> The main place to buy individual parts is <b>BrickLink</b>, the marketplace the LEGO Group bought in 2019. To buy parts there, you search its catalog <b>one part at a time</b>, using catalog names like "Slope 30 1 x 1 x 2/3" (builders call it a "cheese slope") or "Bracket 1 x 2 - 1 x 2". Then you pick one of more than 200 color names and add each part to a Wanted List. A small storefront needs 14 to 20 different parts, so that is 14 to 20 separate searches, each with its own guesswork.</p>
 <p><b>What it costs them.</b> Time and frustration, plus money when they guess wrong:</p>
 <ul>
-  <li><b>Time:</b> <span class="pending" data-slot="motivation-time">[Pending friend test: by hand on BrickLink, a new builder found X of 6 parts in Y minutes.]</span></li>
+  <li><b>Time:</b> In my user test, a first-time builder needed <b>3 minutes 16 seconds to find just 6 parts</b> on BrickLink by hand, even with each part described for her, and rated the experience <b>1 out of 5</b> for ease. She said she did not know BrickLink "followed a certain language": there were several kinds of windows, some for trains, and she could not tell which one she needed.</li>
   <li><b>Wrong parts:</b> many parts look alike ("1 x 2 x 2" and "1 x 2 x 3" windows; "Type 1" and "Type 2" door frames). Ordering the wrong one means another order and another shipping fee.</li>
   <li><b>Dead ends:</b> a part a builder picks may never have been made in the color they want, or may be rare and expensive. BrickLink only shows this after you look the part up.</li>
 </ul>
@@ -145,6 +145,11 @@
   </div>
 </div>
 <div class="fig"><img src="screenshots/04_swap.jpg" alt="Swap suggestion" style="max-width:80%"><div class="cap"><b>Figure 4.</b> The Checker flags a rare part (7 sets, last made 2009) and suggests a common one (79 sets). The builder clicks Swap, or ignores it.</div></div>
+
+<h3>Added after the user test: price estimates</h3>
+<p>My tester asked to see "the effect an 'uncommon' part might have on the overall cost," so I added BrickLink price estimates the same day. Each part now shows an estimated price and line total, and the list shows an estimated total (Figure 10). The estimate is the quantity-weighted average price that new copies of that part, in that color, sold for on BrickLink over the last 6 months.</p>
+<p>A script (<code>scripts/fetch_bricklink_prices.py</code>) reads only the summary at the top of BrickLink's public price-guide page, one request per second. It covered the 968 most common part-and-color combinations plus every combination used in testing, and saved a dated snapshot in the repo, so the app needs no BrickLink login and works offline. The Checker sees prices too: it now also reviews any part over $1 each and says how much a swap saves. The data already caught a real trap: a 1×1 clip plate (<code>61252</code>) sells for about <b>3 cents in black</b> but about <b>$16 in reddish brown</b> (23 sales in 6 months).</p>
+<div class="fig"><img src="screenshots/11_prices.jpg" alt="Price estimates in the parts list"><div class="cap"><b>Figure 10.</b> Price estimates: each part's estimated price and line total, and the list total in the header (a storefront list: about $9.60 for 15 of its 17 parts). The asterisk means some parts have no stored price yet, and they are left out of the total.</div></div>
 
 <!-- 5. TOKENOMICS -->
 <h2 class="newpage">4. Tokenomics</h2>
@@ -217,38 +222,46 @@
 <!-- 7. IMPACT -->
 <h2 class="newpage">6. Impact</h2>
 <h3>A real user tried it</h3>
-<p>Method: a friend who is a new MOC builder did the same job two ways on my laptop, using a step-by-step test page with built-in timers (<code>docs/friend_test_kit.html</code>, Figure 9). Task 1: find 6 described parts on BrickLink by hand, with an 8-minute cap. Task 2: get the same parts with StudFinder and download the Wanted List. Then 5 questions.</p>
-<div class="pending" data-slot="impact-results">[Pending friend test: results table goes here: time and parts correct by hand vs. with StudFinder, ease ratings out of 5, "would you use it", and what went wrong.]</div>
+<p>Method: a friend who had never built a MOC did the same job two ways, on her own computer, through a temporary public link to the app. A self-guided test page with built-in timers (<code>docs/friend_test_kit.html</code>, Figure 9) walked her through it. Task 1: find 6 described parts on BrickLink by hand, with an 8-minute cap. Task 2: get the same parts with StudFinder and download the Wanted List. Then 8 questions. One button sent her answers and her StudFinder session back to the app.</p>
+<table>
+  <tr><th>Same 6 parts</th><th class="num">By hand on BrickLink</th><th class="num">With StudFinder</th></tr>
+  <tr><td>Time</td><td class="num">3 min 16 s</td><td class="num"><b>31 s</b> (6.3× faster)</td></tr>
+  <tr><td>Parts correct</td><td class="num">6 of 6</td><td class="num">6 of 6, plus the matching window glass</td></tr>
+  <tr><td>Ease (1 = very hard, 5 = very easy)</td><td class="num">1</td><td class="num"><b>5</b></td></tr>
+  <tr><td>Would use StudFinder for her next build?</td><td class="num" colspan="2">Yes</td></tr>
+</table>
+<p class="small">Tester: Rachel, who had never built a MOC before. Her StudFinder run, from the app's own log: 6 model calls, 18,276 tokens, $0.0016. Results were sent from the test page on 26 October 2026 and are stored with her StudFinder session (the parts list it produced and its token use).</p>
 <p></p>
-<div class="pending" data-slot="impact-quote">[Pending friend test: quote goes here, if the tester agreed to be quoted.]</div>
+<div class="callout green"><p style="font-size:17px;margin:0">"I would tell them it is very useful, and speeds up the bricklink process a lot."</p><p class="small" style="margin:4px 0 0">Rachel, first-time MOC builder (quoted with her permission)</p></div>
 <div class="fig"><img src="screenshots/10_kit_task1.jpg" alt="Friend test kit" style="max-width:85%"><div class="cap"><b>Figure 9.</b> The friend test page used for the study. It has a built-in timer, six parts described in plain words, and an answer key that scores the part numbers automatically.</div></div>
 
 <h3>What the numbers mean</h3>
-<div class="pending" data-slot="impact-math">[Pending friend test: time saved per build, worked out from the tester's measured minutes per part on BrickLink × about 15 parts per build, compared with StudFinder's measured time.]</div>
+<p><b>Speed:</b> with the same accuracy, she was <b>6.3 times faster</b> with StudFinder. By hand she averaged about 33 seconds per part, and that was with every part described precisely in the test. A builder starting from a vague idea would not have those descriptions, so real searches would likely take longer. At her pace, a 15-part build like the storefront means about 8 minutes of searching by hand, against well under a minute with StudFinder (about 17 seconds of agent time, then reading the list). The bigger difference is effort: she rated BrickLink 1 out of 5 and StudFinder 5 out of 5.</p>
 <ul>
   <li><b>Accuracy, measured by AI-run tests:</b> 7 of 7 parts with both part and color right, in 5 of 5 runs. A plain chatbot averaged 3.6 of 7 on the same request.</li>
   <li><b>Speed, measured:</b> a complete list for a 14 to 18-part build in about 17 seconds of agent time on average.</li>
   <li><b>Cost:</b> about $0.024 per builder per month, so a LEGO user group or school club with 200 members could run it for about $5 a month.</li>
   <li><b>Something that was hard before is now easy:</b> a builder with only an idea, no 3D model and no part names, can get a buyable BrickLink list.</li>
 </ul>
-<p class="small">Sources: friend test (n = 1, my laptop, October 2026); <code>docs/eval/results.json</code> and <code>docs/eval/baseline.json</code> (AI-run tests, 23 October 2026). These are small samples, not a controlled study.</p>
+<p class="small">Sources: friend test (n = 1, remote, 26 October 2026); <code>docs/eval/results.json</code> and <code>docs/eval/baseline.json</code> (AI-run tests, 23 October 2026). These are small samples, not a controlled study.</p>
 
 <!-- 8. LIMITS + NEXT -->
 <h2>7. Limits and next steps</h2>
 <h3>What doesn't work yet</h3>
 <ul>
-  <li><b>Part numbers come from Rebrickable.</b> They match BrickLink for most standard parts, but a few differ; for example, Rebrickable's 6141 is BrickLink's 4073. BrickLink's upload page flags any it does not recognize. <span class="pending" data-slot="limits-upload">[Pending: result of uploading a StudFinder file to BrickLink.]</span></li>
-  <li><b>No building instructions, and no check that the parts build the model.</b> StudFinder gives a palette of parts, not a design. That suits free-builders, but a builder who wants step-by-step instructions still has to design the model, for example in BrickLink Studio. The Checker catches obvious gaps, such as a door frame with no door, but not every gap. <span class="pending" data-slot="limits-use">[Pending friend test: what the tester said they would do with a parts list for their own idea, and what would make StudFinder more useful.]</span></li>
+  <li><b>Part numbers: the common ones are fixed, rarer ones are not checked.</b> The catalog uses Rebrickable's numbers. In my own upload test, BrickLink accepted <b>16 of 18 parts</b> on the first try and rejected two: <code>3069b</code> and <code>6141</code>, which BrickLink numbers <code>3069</code> and <code>4073</code>. I then checked the 378 most common parts against BrickLink's catalog: 352 use the same number, <b>22 use a different one</b> (including the 1×1, 1×2, and 2×2 tiles), and 4 were not found. The export now translates those 22; a few were matched to a closely related mold of the same part. Parts outside that set keep Rebrickable's number, and BrickLink's upload page names any it does not recognize.</li>
+  <li><b>Prices are a snapshot, not live.</b> They cover the 968 most common part-and-color combinations as of 26 October 2026. Other parts show "no price yet" and are left out of the total. Estimates do not include shipping or store minimums, and prices based on fewer than 10 sales are marked "few sales".</li>
+  <li><b>No building instructions, and no check that the parts build the model.</b> StudFinder gives a palette of parts, not a design. That suits free-builders, but a builder who wants step-by-step instructions still has to design the model, for example in BrickLink Studio. The Checker catches obvious gaps, such as a door frame with no door, but not every gap. My tester said that for her own idea she would <b>design it in Studio or another app first</b>, then buy, and that StudFinder would be more useful with "a way for me to intuitively create instructions using it." She also asked for BrickLink price estimates, "to see the effect an uncommon part might have on the overall cost." So free-building is not the only use. For builders like her, the next step is the Studio export below.</li>
   <li><b>No prices yet.</b> Price checks and choosing stores are left to BrickLink's "Buy All".</li>
-  <li><b>Small evaluation.</b> One real user, and the tasks were always done in the same order (by hand first), so the tester knew the parts better by Task 2. The AI tests use 6 builds and 5 repeat runs.</li>
+  <li><b>Small evaluation.</b> One real user. The tasks were always done in the same order (by hand first), so she knew the parts better by Task 2. The by-hand task described each part precisely, which makes BrickLink look easier than it is in real life. The AI tests use 6 builds and 5 repeat runs.</li>
   <li><b>The injection filter is shallow</b> (see Safety). The caps and catalog checks are the real protection.</li>
 </ul>
 <h3>With another month</h3>
 <ol>
   <li><b>"Open in Studio":</b> export the list as an LDraw model file, a standard format BrickLink Studio imports, with the parts laid out like a tray. The builder designs with exactly those parts, and Studio produces the instructions and a final parts list.</li>
   <li><b>Suggested build steps, then designs:</b> start with a short, section-by-section build plan from the agents, clearly marked as a rough guide. Fully generated, buildable models are still early research, and today's prototypes only handle simple brick-only models.</li>
-  <li><b>Exact BrickLink part numbers:</b> use Rebrickable's API to map every part number once when building the catalog.</li>
-  <li><b>Live prices:</b> use BrickLink's price data so the Checker can trade off cost against looks, for example "swap this rare part and save $8."</li>
+  <li><b>Exact BrickLink numbers for every part:</b> the 378 most common are checked; the rest need Rebrickable's API to map them once.</li>
+  <li><b>Live prices for any part:</b> today's snapshot covers the 968 most common combinations. BrickLink's official API would price any part on demand, so the Checker could say "swap this rare part and save $8."</li>
   <li><b>"What I already own":</b> import a builder's sets from Rebrickable and subtract those parts before buying.</li>
   <li><b>Photo input:</b> photograph a build you like and get a starting list.</li>
   <li><b>Host it online</b> with logins, and test it with a LEGO user group to get a larger sample.</li>
